@@ -1,0 +1,23 @@
+services:
+  api:
+    build:
+      context: ../vitrine-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - vitrine-data:/app/data
+    environment:
+      FRONTEND_ORIGINS: http://localhost:3000,http://127.0.0.1:3000
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+    ports:
+      - "3000:80"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  vitrine-data:

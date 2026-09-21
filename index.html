@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Vitrine: loja, planejamento de compras e gestão de catálogo" />
+    <title>Vitrine — loja e gestão de catálogo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#inicio" aria-label="Ir para o início">
+        <span class="brand-mark">V</span>
+        <span>Vitrine</span>
+      </a>
+
+      <label class="search" aria-label="Buscar produtos">
+        <span>⌕</span>
+        <input id="searchInput" type="search" placeholder="Buscar produtos" autocomplete="off" />
+        <kbd>⌘ K</kbd>
+      </label>
+
+      <nav class="nav-links" aria-label="Navegação principal">
+        <a class="active" href="#inicio" data-store-link>Loja</a>
+        <button class="nav-button" id="favoritesButton" type="button">Favoritos <span id="favoriteCount">0</span></button>
+        <button class="nav-button" id="adminButton" type="button">Painel admin</button>
+      </nav>
+
+      <button class="cart-button" id="openCart" type="button" aria-label="Abrir carrinho">
+        <span>🛍</span>
+        <span class="cart-label">Carrinho</span>
+        <strong id="cartCount">0</strong>
+      </button>
+      <button class="admin-mobile" id="adminMobile" type="button" aria-label="Abrir painel administrativo">⚙</button>
+    </header>
+
+    <main>
+      <section class="hero" id="inicio" data-store-section>
+        <div class="hero-copy">
+          <span class="eyebrow">ESCOLHAS QUE COMBINAM COM VOCÊ</span>
+          <h1>Encontre algo <em>especial.</em></h1>
+          <p>Moda, tecnologia e acessórios reunidos em uma experiência simples, rápida e consciente.</p>
+          <a class="primary-action" href="#produtos">Explorar produtos <span>→</span></a>
+          <div class="hero-trust">
+            <span>✓ Compra segura</span>
+            <span>✓ Carrinho persistente</span>
+          </div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="orb orb-one"></div>
+          <div class="orb orb-two"></div>
+          <div class="bag">
+            <span class="bag-handle"></span>
+            <strong>V</strong>
+          </div>
+          <div class="floating-card card-rating"><span>★</span><strong>4,8</strong><small>avaliação média</small></div>
+          <div class="floating-card card-delivery"><span>↗</span><strong>Entrega</strong><small>acompanhe seu pedido</small></div>
+        </div>
+      </section>
+
+      <section class="benefits" aria-label="Benefícios" data-store-section>
+        <article><span>◇</span><div><strong>Seleção especial</strong><small>Produtos escolhidos para você</small></div></article>
+        <article><span>♻</span><div><strong>Compra consciente</strong><small>Planeje antes de finalizar</small></div></article>
+        <article><span>◎</span><div><strong>Controle de orçamento</strong><small>Acompanhe seus gastos</small></div></article>
+      </section>
+
+      <section class="catalog" id="produtos" data-store-section>
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">NOSSA CURADORIA</span>
+            <h2>Produtos em destaque</h2>
+          </div>
+          <p id="resultCount">Carregando produtos...</p>
+        </div>
+
+        <div class="catalog-controls">
+          <div class="category-tabs" id="categoryTabs" role="tablist" aria-label="Categorias"></div>
+          <label class="sort-control">Ordenar
+            <select id="sortSelect">
+              <option value="featured">Mais relevantes</option>
+              <option value="price-asc">Menor preço</option>
+              <option value="price-desc">Maior preço</option>
+              <option value="rating">Melhor avaliação</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="product-grid" id="productGrid" aria-live="polite"></div>
+        <div class="loading-state" id="loadingState"><span></span><p>Carregando o catálogo...</p></div>
+        <div class="empty-state hidden" id="emptyState">
+          <span>⌕</span>
+          <h3>Nenhum produto encontrado</h3>
+          <p>Tente buscar outro termo ou escolher uma categoria diferente.</p>
+          <button type="button" id="clearFilters">Limpar filtros</button>
+        </div>
+      </section>
+
+      <section class="admin hidden" id="adminPanel">
+        <div class="admin-topbar">
+          <div>
+            <span class="eyebrow">GESTÃO DA LOJA</span>
+            <h1>Painel administrativo</h1>
+            <p>Gerencie o catálogo persistido pela API Vitrine.</p>
+          </div>
+          <div class="admin-actions">
+            <button class="secondary-admin-button" id="syncProducts" type="button">↻ Sincronizar Fake Store</button>
+            <button class="primary-admin-button" id="newProduct" type="button">＋ Novo produto</button>
+            <button class="admin-exit" id="exitAdmin" type="button">Voltar à loja</button>
+          </div>
+        </div>
+
+        <div class="metric-grid" id="metricGrid">
+          <article><span>Produtos</span><strong id="metricTotal">—</strong><small>no catálogo</small></article>
+          <article><span>Ativos</span><strong id="metricActive">—</strong><small>visíveis na loja</small></article>
+          <article class="warning-metric"><span>Estoque baixo</span><strong id="metricLowStock">—</strong><small>5 unidades ou menos</small></article>
+          <article><span>Preço médio</span><strong id="metricAverage">—</strong><small>em todo o catálogo</small></article>
+        </div>
+
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <div><h2>Catálogo de produtos</h2><p id="adminCount">Carregando...</p></div>
+            <label class="admin-search"><span>⌕</span><input id="adminSearch" type="search" placeholder="Buscar no catálogo" /></label>
+          </div>
+          <div class="table-wrap">
+            <table class="product-table">
+              <thead><tr><th>Produto</th><th>Origem</th><th>Preço</th><th>Estoque</th><th>Status</th><th><span class="sr-only">Ações</span></th></tr></thead>
+              <tbody id="adminTable"></tbody>
+            </table>
+          </div>
+          <div class="admin-empty hidden" id="adminEmpty"><p>Nenhum produto cadastrado.</p><button id="emptySync" type="button">Importar da Fake Store</button></div>
+        </div>
+      </section>
+    </main>
+
+    <div class="overlay" id="overlay"></div>
+    <aside class="cart-drawer" id="cartDrawer" aria-hidden="true" aria-label="Meu carrinho">
+      <div class="drawer-header">
+        <div><span class="eyebrow">SUA SELEÇÃO</span><h2>Meu carrinho</h2></div>
+        <button id="closeCart" type="button" aria-label="Fechar carrinho">×</button>
+      </div>
+      <div class="cart-items" id="cartItems"></div>
+      <div class="cart-empty" id="cartEmpty">
+        <div>🛍</div><h3>Seu carrinho está vazio</h3><p>Adicione produtos para começar.</p>
+      </div>
+      <div class="cart-summary" id="cartSummary">
+        <div class="budget-heading"><span>Resumo da compra</span><button id="editBudget" type="button">Editar meta</button></div>
+        <div class="budget-row"><strong id="budgetPercent">0%</strong><span id="budgetStatus">da sua meta</span></div>
+        <div class="progress"><span id="budgetProgress"></span></div>
+        <small id="budgetCaption">Meta de R$ 600,00</small>
+        <dl><div><dt>Subtotal</dt><dd id="subtotal">R$ 0,00</dd></div><div class="total"><dt>Total</dt><dd id="total">R$ 0,00</dd></div></dl>
+        <button class="checkout-button" id="checkoutButton" type="button">Finalizar compra <span>→</span></button>
+      </div>
+    </aside>
+
+    <dialog id="productDialog" class="product-dialog">
+      <button class="dialog-close" id="closeDialog" type="button" aria-label="Fechar">×</button>
+      <div id="dialogContent"></div>
+    </dialog>
+
+    <dialog id="budgetDialog" class="budget-dialog">
+      <form method="dialog" id="budgetForm">
+        <span class="eyebrow">PLANEJAMENTO</span>
+        <h2>Defina sua meta de compra</h2>
+        <p>Use um limite para acompanhar seu orçamento enquanto escolhe os produtos.</p>
+        <label>Valor da meta
+          <span class="money-input">R$ <input id="budgetInput" type="number" min="50" step="50" required /></span>
+        </label>
+        <div class="dialog-actions"><button value="cancel" class="secondary-button">Cancelar</button><button value="default" class="primary-button" id="saveBudget">Salvar meta</button></div>
+      </form>
+    </dialog>
+
+    <dialog id="productFormDialog" class="form-dialog">
+      <form id="productForm">
+        <div class="form-dialog-header">
+          <div><span class="eyebrow" id="formEyebrow">NOVO ITEM</span><h2 id="formTitle">Cadastrar produto</h2></div>
+          <button class="dialog-close" id="closeProductForm" type="button" aria-label="Fechar">×</button>
+        </div>
+        <input type="hidden" id="productId" />
+        <div class="form-grid">
+          <label class="full-field">Nome do produto<input id="productTitle" name="title" required minlength="2" maxlength="160" /></label>
+          <label>Categoria<input id="productCategory" name="category" required minlength="2" maxlength="80" /></label>
+          <label>Preço (R$)<input id="productPrice" name="price" type="number" min="0.01" step="0.01" required /></label>
+          <label>Estoque<input id="productStock" name="stock" type="number" min="0" step="1" required /></label>
+          <label>Produto ativo<select id="productActive" name="active"><option value="true">Sim</option><option value="false">Não</option></select></label>
+          <label class="full-field">URL da imagem<input id="productImage" name="image" type="url" required /></label>
+          <label class="full-field">Descrição<textarea id="productDescription" name="description" rows="4" required minlength="2" maxlength="1200"></textarea></label>
+        </div>
+        <div class="form-error hidden" id="formError"></div>
+        <div class="dialog-actions"><button class="secondary-button" id="cancelProductForm" type="button">Cancelar</button><button class="primary-button" id="saveProduct" type="submit">Salvar produto</button></div>
+      </form>
+    </dialog>
+
+    <dialog id="deleteDialog" class="confirm-dialog">
+      <form method="dialog">
+        <div class="danger-icon">!</div>
+        <h2>Excluir produto?</h2>
+        <p>Esta ação remove o produto do banco de dados e não poderá ser desfeita.</p>
+        <div class="dialog-actions"><button value="cancel" class="secondary-button">Cancelar</button><button value="default" class="danger-button" id="confirmDelete">Excluir produto</button></div>
+      </form>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
