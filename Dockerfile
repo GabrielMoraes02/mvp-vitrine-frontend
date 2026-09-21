@@ -1,7 +1,7 @@
 FROM nginx:1.27-alpine
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY index.html admin.html styles.css app.js admin.js config.js /usr/share/nginx/html/
+COPY index.html admin.html login.html checkout.html styles.css app.js admin.js login.js checkout.js config.js favicon.svg /usr/share/nginx/html/
 
 EXPOSE 80
 

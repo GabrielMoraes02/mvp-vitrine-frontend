@@ -17,7 +17,9 @@ const state = {
   favorites: JSON.parse(localStorage.getItem("vitrine-favorites") || "[]"),
   cart: JSON.parse(localStorage.getItem("vitrine-cart") || "{}"),
   budget: Number(localStorage.getItem("vitrine-budget") || 600),
-  deleteId: null
+  deleteId: null,
+  promos: [],
+  promoIndex: 0
 };
 
 const $ = selector => document.querySelector(selector);
@@ -59,6 +61,7 @@ async function loadStore({ syncWhenEmpty = true } = {}) {
     state.products = result.items;
     renderCategories();
     renderCategoryShowcase();
+    renderPromoCarousel();
     renderProducts();
     renderCart();
   } catch (error) {
@@ -66,6 +69,49 @@ async function loadStore({ syncWhenEmpty = true } = {}) {
   } finally {
     $("#loadingState").classList.add("hidden");
   }
+}
+
+function renderPromoCarousel() {
+  const featured = [];
+  for (const product of state.products) {
+    if (!featured.some(item => item.category === product.category)) featured.push(product);
+    if (featured.length === 3) break;
+  }
+  state.promos = featured;
+  state.promoIndex = Math.min(state.promoIndex, Math.max(featured.length - 1, 0));
+  const messages = [
+    { tag: "DESTAQUE DA SEMANA", title: "Tecnologia para acompanhar seu ritmo", action: "Ver oferta" },
+    { tag: "SELEÇÃO ESPECIAL", title: "Escolhas que renovam seu estilo", action: "Descobrir" },
+    { tag: "MAIS DESEJADOS", title: "Detalhes para tornar o dia especial", action: "Quero conhecer" }
+  ];
+  $("#promoTrack").innerHTML = featured.map((product, index) => {
+    const message = messages[index];
+    return `<article class="promo-slide" aria-hidden="${index !== state.promoIndex}">
+      <div class="promo-copy"><span>${message.tag}</span><h2>${message.title}</h2><strong>${formatMoney(product.price)}</strong><button type="button" data-promo-product="${product.id}">${message.action} →</button></div>
+      <div class="promo-image"><span class="promo-bubble"></span><img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.title)}" /></div>
+    </article>`;
+  }).join("");
+  $("#promoDots").innerHTML = featured.map((_, index) => `<button type="button" data-promo-index="${index}" class="${index === state.promoIndex ? "active" : ""}" aria-label="Mostrar oferta ${index + 1}"></button>`).join("");
+  updatePromoCarousel();
+}
+
+function updatePromoCarousel() {
+  $("#promoTrack").style.transform = `translateX(-${state.promoIndex * 100}%)`;
+  $$(".promo-slide").forEach((slide, index) => slide.setAttribute("aria-hidden", String(index !== state.promoIndex)));
+  $$('[data-promo-index]').forEach((dot, index) => dot.classList.toggle("active", index === state.promoIndex));
+}
+
+function changePromo(direction) {
+  if (!state.promos.length) return;
+  state.promoIndex = (state.promoIndex + direction + state.promos.length) % state.promos.length;
+  updatePromoCarousel();
+}
+
+function updateAccountButton() {
+  const user = JSON.parse(localStorage.getItem("vitrine-user") || "null");
+  $("#accountLabel").textContent = user?.name?.split(" ")[0] || "Entrar";
+  $(".account-icon").textContent = user?.name?.charAt(0).toUpperCase() || "♡";
+  $("#accountButton").setAttribute("aria-label", user ? `Conta de ${user.name}` : "Entrar na sua conta");
 }
 
 function renderConnectionError(message) {
@@ -276,7 +322,7 @@ function renderAdminProducts() {
   $("#adminTable").innerHTML = products.map(product => `
     <tr>
       <td><div class="table-product"><img src="${escapeHtml(product.image)}" alt="" /><div><strong>${escapeHtml(product.title)}</strong><small>${escapeHtml(categoryName(product.category))}</small></div></div></td>
-      <td><span class="source-badge ${product.source}">${product.source === "fake_store" ? "Fake Store" : "Local"}</span></td>
+      <td><span class="source-badge ${product.source}">${product.source === "fake_store" ? "Importado" : "Local"}</span></td>
       <td><strong>${formatMoney(product.price)}</strong></td>
       <td><span class="stock-badge ${product.stock <= 5 ? "low" : ""}">${product.stock} un.</span></td>
       <td><span class="status-badge ${product.active ? "active" : "inactive"}">${product.active ? "Ativo" : "Inativo"}</span></td>
@@ -428,7 +474,22 @@ $("#saveBudget").addEventListener("click", event => {
   if (!$("#budgetInput").checkValidity()) return;
   event.preventDefault(); state.budget = Number($("#budgetInput").value); $("#budgetDialog").close(); renderCart(); showToast("Meta atualizada");
 });
-$("#checkoutButton").addEventListener("click", () => showToast("Compra simulada com sucesso!"));
+$("#checkoutButton").addEventListener("click", () => {
+  if (!cartEntries().length) return;
+  const next = "checkout.html";
+  window.location.href = localStorage.getItem("vitrine-user") ? next : `login.html?next=${encodeURIComponent(next)}`;
+});
+$("#promoPrevious").addEventListener("click", () => changePromo(-1));
+$("#promoNext").addEventListener("click", () => changePromo(1));
+$("#promoDots").addEventListener("click", event => {
+  const dot = event.target.closest("[data-promo-index]");
+  if (!dot) return;
+  state.promoIndex = Number(dot.dataset.promoIndex); updatePromoCarousel();
+});
+$("#promoTrack").addEventListener("click", event => {
+  const button = event.target.closest("[data-promo-product]");
+  if (button) showProduct(Number(button.dataset.promoProduct));
+});
 $("#budgetFeatureButton").addEventListener("click", () => { $("#budgetInput").value = state.budget; $("#budgetDialog").showModal(); });
 $("#footerBudget").addEventListener("click", () => { $("#budgetInput").value = state.budget; $("#budgetDialog").showModal(); });
 $("#footerFavorites").addEventListener("click", () => $("#favoritesButton").click());
@@ -456,4 +517,6 @@ document.addEventListener("keydown", event => {
   if (event.key === "Escape") closeCart();
 });
 
+updateAccountButton();
 loadStore();
+setInterval(() => changePromo(1), 6000);

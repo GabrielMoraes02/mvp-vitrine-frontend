@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <meta name="description" content="Finalize sua compra na Vitrine" />
+    <title>Vitrine — finalizar compra</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="checkout-body">
+    <header class="simple-header checkout-header">
+      <a class="brand" href="index.html"><span class="brand-mark">V</span><span>Vitrine</span></a>
+      <div class="checkout-secure">● Ambiente seguro</div>
+      <a class="back-store" href="index.html">← Voltar ao carrinho</a>
+    </header>
+
+    <main class="checkout-main">
+      <div class="checkout-steps" aria-label="Etapas da compra"><span class="active"><b>1</b> Identificação</span><i></i><span class="active"><b>2</b> Entrega</span><i></i><span class="active"><b>3</b> Pagamento</span></div>
+
+      <div class="checkout-empty hidden" id="checkoutEmpty"><div>🛍</div><h1>Seu carrinho está vazio</h1><p>Escolha seus produtos antes de finalizar.</p><a class="primary-auth-button" href="index.html#produtos">Explorar produtos</a></div>
+
+      <div class="checkout-grid" id="checkoutContent">
+        <section class="checkout-forms">
+          <article class="checkout-card customer-card"><div class="checkout-card-number">✓</div><div><span class="eyebrow">IDENTIFICAÇÃO</span><h2 id="customerName">Cliente</h2><p id="customerEmail"></p></div><a href="login.html?next=checkout.html">Trocar</a></article>
+
+          <form id="checkoutForm">
+            <article class="checkout-card">
+              <div class="checkout-card-title"><span class="checkout-card-number">2</span><div><span class="eyebrow">ENTREGA</span><h2>Onde você quer receber?</h2></div></div>
+              <div class="checkout-form-grid">
+                <label>CEP<input id="postalCode" inputmode="numeric" maxlength="9" placeholder="00000-000" required /></label>
+                <label class="wide-field">Endereço<input id="address" autocomplete="street-address" placeholder="Rua, avenida..." required /></label>
+                <label>Número<input id="addressNumber" inputmode="numeric" required /></label>
+                <label>Complemento<input id="addressExtra" placeholder="Opcional" /></label>
+                <label>Bairro<input id="district" required /></label>
+                <label>Cidade<input id="city" required /></label>
+                <label>Estado<select id="stateField" required><option value="">Selecione</option><option>SP</option><option>RJ</option><option>MG</option><option>RS</option><option>PR</option><option>SC</option><option>BA</option><option>PE</option><option>CE</option><option>DF</option><option>GO</option><option>ES</option><option>Outro</option></select></label>
+              </div>
+              <label class="shipping-option"><input type="radio" checked /><span><strong>Entrega padrão</strong><small>Receba em até 7 dias úteis</small></span><b>Grátis</b></label>
+            </article>
+
+            <article class="checkout-card">
+              <div class="checkout-card-title"><span class="checkout-card-number">3</span><div><span class="eyebrow">PAGAMENTO</span><h2>Como você prefere pagar?</h2></div></div>
+              <div class="payment-options">
+                <label class="payment-option active"><input type="radio" name="payment" value="card" checked /><span>▣</span><strong>Cartão</strong><small>Até 6x sem juros</small></label>
+                <label class="payment-option"><input type="radio" name="payment" value="pix" /><span>◆</span><strong>Pix</strong><small>Aprovação imediata</small></label>
+                <label class="payment-option"><input type="radio" name="payment" value="boleto" /><span>▤</span><strong>Boleto</strong><small>Vencimento em 2 dias</small></label>
+              </div>
+              <div class="card-fields" id="cardFields">
+                <label class="wide-field">Número do cartão<input id="cardNumber" inputmode="numeric" maxlength="19" placeholder="0000 0000 0000 0000" required /></label>
+                <label class="wide-field">Nome impresso no cartão<input id="cardName" autocomplete="cc-name" placeholder="NOME COMPLETO" required /></label>
+                <label>Validade<input id="cardExpiry" inputmode="numeric" maxlength="5" placeholder="MM/AA" required /></label>
+                <label>CVV<input id="cardCvv" inputmode="numeric" maxlength="3" placeholder="000" required /></label>
+                <label>Parcelas<select id="installments"><option>1x sem juros</option><option>2x sem juros</option><option>3x sem juros</option><option>4x sem juros</option><option>5x sem juros</option><option>6x sem juros</option></select></label>
+              </div>
+            </article>
+          </form>
+        </section>
+
+        <aside class="order-summary checkout-card">
+          <div class="order-summary-title"><div><span class="eyebrow">SEU PEDIDO</span><h2>Resumo da compra</h2></div><a href="index.html">Editar</a></div>
+          <div class="checkout-items" id="checkoutItems"></div>
+          <dl><div><dt>Subtotal</dt><dd id="checkoutSubtotal">—</dd></div><div><dt>Entrega</dt><dd class="free-shipping">Grátis</dd></div><div class="checkout-total"><dt>Total</dt><dd id="checkoutTotal">—</dd></div></dl>
+          <button class="finish-order-button" id="finishOrder" type="submit" form="checkoutForm">Confirmar pedido <span>→</span></button>
+          <p class="order-safe">✓ Compra simulada para fins acadêmicos</p>
+        </aside>
+      </div>
+
+      <section class="order-success hidden" id="orderSuccess"><div class="success-icon">✓</div><span class="eyebrow">PEDIDO CONFIRMADO</span><h1>Compra finalizada!</h1><p>Seu pedido <strong id="orderNumber"></strong> foi registrado nesta demonstração.</p><div class="success-delivery"><span>Entrega estimada</span><strong>até 7 dias úteis</strong></div><a class="primary-auth-button" href="index.html">Voltar para a loja</a></section>
+    </main>
+    <script src="config.js"></script>
+    <script src="checkout.js"></script>
+  </body>
+</html>

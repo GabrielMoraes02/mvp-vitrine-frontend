@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="announcement-bar"><span>Compra planejada, escolhas melhores.</span><span>Catálogo atualizado pela Fake Store</span><span>Controle seu orçamento em tempo real</span></div>
+    <div class="announcement-bar"><span>Compra planejada, escolhas melhores.</span><span>Novidades selecionadas para você</span><span>Controle seu orçamento em tempo real</span></div>
     <header class="topbar">
       <a class="brand" href="#inicio" aria-label="Ir para o início">
         <span class="brand-mark">V</span>
@@ -31,6 +31,10 @@
         <a href="#produtos">Produtos</a>
         <button class="nav-button" id="favoritesButton" type="button"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20.8 4.7a5.5 5.5 0 0 0-7.8 0L12 5.8l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.4 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"></path></svg><span class="nav-button-label">Favoritos</span><strong id="favoriteCount">0</strong></button>
       </nav>
+
+      <a class="account-button" id="accountButton" href="login.html" aria-label="Entrar na sua conta">
+        <span class="account-icon">♡</span><span id="accountLabel">Entrar</span>
+      </a>
 
       <button class="cart-button" id="openCart" type="button" aria-label="Abrir carrinho">
         <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 8h12l1 12H5L6 8Z"></path><path d="M9 9V6a3 3 0 0 1 6 0v3"></path></svg>
@@ -51,15 +55,13 @@
             <span>✓ Carrinho persistente</span>
           </div>
         </div>
-        <div class="hero-art" aria-hidden="true">
-          <div class="orb orb-one"></div>
-          <div class="orb orb-two"></div>
-          <div class="bag">
-            <span class="bag-handle"></span>
-            <strong>V</strong>
+        <div class="hero-carousel" aria-label="Ofertas em destaque">
+          <div class="promo-track" id="promoTrack"></div>
+          <div class="promo-controls">
+            <button id="promoPrevious" type="button" aria-label="Oferta anterior">←</button>
+            <div class="promo-dots" id="promoDots"></div>
+            <button id="promoNext" type="button" aria-label="Próxima oferta">→</button>
           </div>
-          <div class="floating-card card-rating"><span>★</span><strong>4,8</strong><small>avaliação média</small></div>
-          <div class="floating-card card-delivery"><span>↗</span><strong>Entrega</strong><small>acompanhe seu pedido</small></div>
         </div>
       </section>
 
@@ -140,7 +142,7 @@
               <tbody id="adminTable"></tbody>
             </table>
           </div>
-          <div class="admin-empty hidden" id="adminEmpty"><p>Nenhum produto cadastrado.</p><button id="emptySync" type="button">Importar da Fake Store</button></div>
+          <div class="admin-empty hidden" id="adminEmpty"><p>Nenhum produto cadastrado.</p><button id="emptySync" type="button">Importar catálogo</button></div>
         </div>
       </section>
 
@@ -159,7 +161,7 @@
     </main>
 
     <footer class="site-footer" data-store-section>
-      <div class="footer-main"><div class="footer-brand"><a class="brand" href="#inicio"><span class="brand-mark">V</span><span>Vitrine</span></a><p>Uma experiência acadêmica de catálogo, orçamento e compras simuladas.</p></div><div><strong>Navegue</strong><a href="#inicio">Início</a><a href="#categorias">Categorias</a><a href="#produtos">Produtos</a></div><div><strong>Recursos</strong><button id="footerFavorites" type="button">Favoritos</button><button id="footerBudget" type="button">Meu orçamento</button><a href="https://fakestoreapi.com/" target="_blank" rel="noreferrer">Fake Store API ↗</a></div><div><strong>Projeto</strong><span>FastAPI + SQLite</span><span>Interface responsiva</span><span>Docker</span></div></div>
+      <div class="footer-main"><div class="footer-brand"><a class="brand" href="#inicio"><span class="brand-mark">V</span><span>Vitrine</span></a><p>Uma experiência acadêmica de catálogo, orçamento e compras simuladas.</p></div><div><strong>Navegue</strong><a href="#inicio">Início</a><a href="#categorias">Categorias</a><a href="#produtos">Produtos</a></div><div><strong>Recursos</strong><button id="footerFavorites" type="button">Favoritos</button><button id="footerBudget" type="button">Meu orçamento</button><a href="login.html">Minha conta</a></div><div><strong>Projeto</strong><span>FastAPI + SQLite</span><span>Interface responsiva</span><span>Docker</span></div></div>
       <div class="footer-bottom"><span>© 2026 Vitrine. Projeto acadêmico.</span><span>Compras e pagamentos são simulados.</span></div>
     </footer>
 

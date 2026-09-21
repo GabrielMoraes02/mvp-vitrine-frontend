@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <meta name="description" content="Acesse sua conta na Vitrine" />
+    <title>Vitrine — minha conta</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="auth-body">
+    <header class="simple-header">
+      <a class="brand" href="index.html"><span class="brand-mark">V</span><span>Vitrine</span></a>
+      <a class="back-store" href="index.html">← Voltar para a loja</a>
+    </header>
+
+    <main class="auth-layout">
+      <section class="auth-showcase">
+        <span class="eyebrow">SUA CONTA VITRINE</span>
+        <h1>Suas escolhas continuam com você.</h1>
+        <p>Entre para finalizar compras, manter seu carrinho e acompanhar seus pedidos simulados.</p>
+        <div class="auth-benefits"><span>✓ Checkout mais rápido</span><span>✓ Dados salvos neste dispositivo</span><span>✓ Experiência acadêmica segura</span></div>
+        <div class="auth-visual"><div class="auth-orb"></div><div class="auth-bag"><span>V</span></div><div class="auth-ticket">Compra planejada<br><strong>do seu jeito.</strong></div></div>
+      </section>
+
+      <section class="auth-panel">
+        <div class="auth-card">
+          <div id="loggedArea" class="logged-area hidden">
+            <span class="account-avatar" id="loggedAvatar">V</span>
+            <span class="eyebrow">CONTA ATIVA</span>
+            <h2 id="loggedName">Olá!</h2>
+            <p id="loggedEmail"></p>
+            <a class="primary-auth-button" id="continueButton" href="index.html">Continuar comprando</a>
+            <button class="secondary-auth-button" id="logoutButton" type="button">Sair desta conta</button>
+          </div>
+
+          <div id="authArea">
+            <div class="auth-tabs" role="tablist" aria-label="Acesso à conta">
+              <button class="active" type="button" data-auth-mode="login">Entrar</button>
+              <button type="button" data-auth-mode="register">Criar conta</button>
+            </div>
+            <div class="auth-heading"><span class="eyebrow">BEM-VINDO</span><h2 id="authTitle">Entre na sua conta</h2><p id="authDescription">Use seus dados para continuar a compra.</p></div>
+            <form id="authForm">
+              <label class="auth-field hidden" id="nameField">Nome completo<input id="authName" type="text" minlength="3" autocomplete="name" placeholder="Como podemos chamar você?" /></label>
+              <label class="auth-field">E-mail<input id="authEmail" type="email" required autocomplete="email" placeholder="voce@exemplo.com" /></label>
+              <label class="auth-field">Senha<input id="authPassword" type="password" required minlength="6" autocomplete="current-password" placeholder="Mínimo de 6 caracteres" /></label>
+              <div class="auth-form-row"><label class="remember"><input type="checkbox" checked /> Manter conectado</label><button type="button" id="forgotPassword">Esqueci a senha</button></div>
+              <div class="form-error hidden" id="authError"></div>
+              <button class="primary-auth-button" id="authSubmit" type="submit">Entrar e continuar</button>
+            </form>
+            <p class="auth-note">Demonstração acadêmica: os dados ficam somente neste navegador.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="login.js"></script>
+  </body>
+</html>

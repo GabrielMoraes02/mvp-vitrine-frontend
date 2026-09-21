@@ -51,7 +51,7 @@ function renderDashboard(summary) {
     <div class="stock-alert-item"><img src="${escapeHtml(product.image)}" alt="" /><div><strong>${escapeHtml(product.title)}</strong><small>${escapeHtml(categoryById(product.category_id)?.name || product.category)}</small></div><span>${product.stock} un.</span></div>`).join("") : `<div class="dashboard-success">✓ Nenhum produto com estoque baixo.</div>`;
 
   $("#recentProducts").innerHTML = state.products.slice(0, 5).map(product => `
-    <div class="recent-product-item"><img src="${escapeHtml(product.image)}" alt="" /><div><strong>${escapeHtml(product.title)}</strong><small>${money(product.price)} • ${product.source === "fake_store" ? "Fake Store" : "Local"}</small></div><span class="status-dot"></span></div>`).join("");
+    <div class="recent-product-item"><img src="${escapeHtml(product.image)}" alt="" /><div><strong>${escapeHtml(product.title)}</strong><small>${money(product.price)} • ${product.source === "fake_store" ? "Importado" : "Local"}</small></div><span class="status-dot"></span></div>`).join("");
 }
 
 function categoryById(id) { return state.categories.find(item => item.id === Number(id)); }
@@ -70,7 +70,7 @@ function renderProducts() {
     return `<tr>
       <td><div class="table-product"><img src="${escapeHtml(product.image)}" alt="" /><div><strong>${escapeHtml(product.title)}</strong><small>ID ${product.id}</small></div></div></td>
       <td><div class="classification"><strong>${escapeHtml(category)}</strong><small>${escapeHtml(subcategory)}</small></div></td>
-      <td><span class="source-badge ${product.source}">${product.source === "fake_store" ? "Fake Store" : "Local"}</span></td>
+      <td><span class="source-badge ${product.source}">${product.source === "fake_store" ? "Importado" : "Local"}</span></td>
       <td><strong>${money(product.price)}</strong></td><td><span class="stock-badge ${product.stock <= 5 ? "low" : ""}">${product.stock} un.</span></td>
       <td><span class="status-badge ${product.active ? "active" : "inactive"}">${product.active ? "Ativo" : "Inativo"}</span></td>
       <td><div class="row-actions"><button type="button" data-edit-product="${product.id}">✎</button><button class="delete-action" type="button" data-delete-product="${product.id}">⌫</button></div></td>
