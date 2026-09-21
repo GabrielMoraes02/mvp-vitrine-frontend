@@ -217,7 +217,7 @@ async function openAdmin() {
   $$('[data-store-section]').forEach(section => section.classList.add("hidden"));
   $("#adminPanel").classList.remove("hidden");
   $("#openCart").classList.add("hidden");
-  $("#adminMobile").classList.add("hidden");
+  $("#adminMobile")?.classList.add("hidden");
   $(".search").classList.add("hidden");
   window.scrollTo({ top: 0, behavior: "smooth" });
   await loadAdmin();
@@ -227,7 +227,7 @@ function closeAdmin() {
   $("#adminPanel").classList.add("hidden");
   $$('[data-store-section]').forEach(section => section.classList.remove("hidden"));
   $("#openCart").classList.remove("hidden");
-  $("#adminMobile").classList.remove("hidden");
+  $("#adminMobile")?.classList.remove("hidden");
   $(".search").classList.remove("hidden");
   window.scrollTo({ top: 0, behavior: "smooth" });
   loadStore({ syncWhenEmpty: false });
@@ -406,8 +406,8 @@ $("#saveBudget").addEventListener("click", event => {
   event.preventDefault(); state.budget = Number($("#budgetInput").value); $("#budgetDialog").close(); renderCart(); showToast("Meta atualizada");
 });
 $("#checkoutButton").addEventListener("click", () => showToast("Compra simulada com sucesso!"));
-$("#adminButton").addEventListener("click", openAdmin);
-$("#adminMobile").addEventListener("click", openAdmin);
+$("#adminButton")?.addEventListener("click", openAdmin);
+$("#adminMobile")?.addEventListener("click", openAdmin);
 $("#exitAdmin").addEventListener("click", closeAdmin);
 $("[data-store-link]").addEventListener("click", closeAdmin);
 $("#newProduct").addEventListener("click", () => openProductForm());

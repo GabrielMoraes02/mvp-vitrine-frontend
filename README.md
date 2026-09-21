@@ -39,6 +39,7 @@ docker compose up --build
 Depois, acesse:
 
 - Interface: `http://localhost:3000`
+- Painel administrativo: `http://localhost:3000/admin.html`
 - Swagger da API: `http://localhost:8000/docs`
 
 O volume `vitrine-data` preserva o banco SQLite mesmo após reiniciar os contêineres.
@@ -82,6 +83,8 @@ A aplicação utiliza a [Fake Store API](https://fakestoreapi.com/) por meio da 
 │   ├── checklist-entrega.md
 │   └── roteiro-video.md
 ├── app.js
+├── admin.html
+├── admin.js
 ├── config.js
 ├── index.html
 ├── styles.css

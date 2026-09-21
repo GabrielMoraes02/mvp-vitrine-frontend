@@ -167,6 +167,12 @@ dialog::backdrop { background: rgba(7,16,32,.58); backdrop-filter: blur(4px); }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
 .admin { min-height: calc(100vh - 78px); padding: 55px 5vw 90px; background: #f2f4f7; }
+.admin-body { min-height: 100vh; background: #f2f4f7; }
+.admin-standalone { display: block; }
+.admin-header { background: rgba(255,255,255,.96); }
+.admin-header-label { margin-left: auto; display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; font-weight: 700; }
+.status-dot { width: 8px; height: 8px; background: var(--green); border-radius: 50%; box-shadow: 0 0 0 4px rgba(21,155,114,.12); }
+.store-link { margin-left: 18px; padding: 10px 14px; color: var(--ink); background: #eef1f5; border-radius: 10px; text-decoration: none; font-weight: 700; }
 .admin-topbar { max-width: 1440px; margin: 0 auto 35px; display: flex; justify-content: space-between; align-items: end; gap: 30px; }
 .admin-topbar h1 { margin: 8px 0; font: 800 clamp(34px, 4vw, 52px) Manrope; letter-spacing: -.05em; }
 .admin-topbar p { margin: 0; color: var(--muted); }
@@ -183,6 +189,9 @@ dialog::backdrop { background: rgba(7,16,32,.58); backdrop-filter: blur(4px); }
 .metric-grid .warning-metric { background: #fff7e7; border-color: #f3d999; }
 .metric-grid .warning-metric strong { color: #a96200; }
 .admin-card { max-width: 1440px; margin: 0 auto; background: white; border: 1px solid var(--line); border-radius: 18px; overflow: hidden; }
+.admin-tabs { max-width: 1440px; margin: 0 auto 22px; padding: 5px; display: inline-flex; gap: 4px; background: #e6e9ee; border-radius: 12px; }
+.admin-tabs button { padding: 10px 16px; color: var(--muted); background: transparent; border: 0; border-radius: 9px; cursor: pointer; font-weight: 700; }
+.admin-tabs button.active { color: var(--ink); background: white; box-shadow: 0 3px 10px rgba(16,33,63,.08); }
 .admin-card-header { padding: 22px 24px; display: flex; justify-content: space-between; align-items: center; gap: 20px; border-bottom: 1px solid var(--line); }
 .admin-card-header h2 { margin: 0 0 4px; font: 800 21px Manrope; }
 .admin-card-header p { margin: 0; color: var(--muted); font-size: 13px; }
@@ -199,6 +208,8 @@ dialog::backdrop { background: rgba(7,16,32,.58); backdrop-filter: blur(4px); }
 .table-product strong, .table-product small { display: block; }
 .table-product strong { max-width: 390px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; }
 .table-product small { margin-top: 4px; color: var(--muted); }
+.classification strong, .classification small { display: block; white-space: nowrap; }
+.classification small { margin-top: 4px; color: var(--muted); }
 .source-badge, .stock-badge, .status-badge { display: inline-flex; padding: 6px 9px; border-radius: 99px; font-size: 11px; font-weight: 800; white-space: nowrap; }
 .source-badge.fake_store { color: #315a9e; background: #eaf1fd; }
 .source-badge.local { color: #7453a6; background: #f2eafa; }
@@ -229,6 +240,25 @@ dialog::backdrop { background: rgba(7,16,32,.58); backdrop-filter: blur(4px); }
 .confirm-dialog .dialog-actions { justify-content: center; margin-top: 24px; }
 .danger-icon { width: 52px; height: 52px; margin: auto; display: grid; place-items: center; color: #c13220; background: #fff0ed; border-radius: 50%; font: 800 22px Manrope; }
 .danger-button { padding: 11px 16px; color: white; background: #cf3e2b; border: 1px solid #cf3e2b; border-radius: 10px; cursor: pointer; font-weight: 700; }
+.taxonomy-grid { max-width: 1440px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+.taxonomy-card { width: 100%; }
+.taxonomy-card .admin-card-header { min-height: 90px; }
+.small-primary-button { padding: 10px 13px; color: white; background: var(--ink); border: 0; border-radius: 9px; cursor: pointer; font-weight: 700; }
+.taxonomy-filter { margin: 18px 22px 5px; display: flex; align-items: center; justify-content: space-between; gap: 12px; color: var(--muted); font-size: 13px; font-weight: 700; }
+.taxonomy-filter select { min-width: 210px; padding: 9px 12px; color: var(--ink); background: #f3f5f7; border: 1px solid var(--line); border-radius: 9px; }
+.taxonomy-list { padding: 10px 22px 22px; }
+.taxonomy-item { padding: 13px 0; display: grid; grid-template-columns: 42px 1fr auto; align-items: center; gap: 12px; border-bottom: 1px solid var(--line); }
+.taxonomy-item:last-child { border-bottom: 0; }
+.taxonomy-icon { width: 42px; height: 42px; display: grid; place-items: center; color: white; background: var(--accent); border-radius: 11px; font: 800 17px Manrope; }
+.taxonomy-icon.sub { color: #315a9e; background: #eaf1fd; }
+.taxonomy-copy strong, .taxonomy-copy small { display: block; }
+.taxonomy-copy small { margin-top: 4px; color: var(--muted); }
+.taxonomy-empty { padding: 45px 10px; color: var(--muted); text-align: center; }
+.small-form-dialog { width: min(480px, 92vw); padding: 30px; }
+.small-form-dialog .form-dialog-header { margin-bottom: 22px; }
+.standalone-field { display: grid; gap: 8px; margin: 16px 0; color: var(--muted); font-size: 13px; font-weight: 700; }
+.standalone-field input, .standalone-field select { width: 100%; padding: 11px 12px; color: var(--ink); background: white; border: 1px solid var(--line); border-radius: 10px; outline: 0; }
+.small-form-dialog .dialog-actions { margin-top: 22px; }
 
 @media (max-width: 1050px) {
   .nav-links { display: none; }
@@ -278,6 +308,11 @@ dialog::backdrop { background: rgba(7,16,32,.58); backdrop-filter: blur(4px); }
   .admin-search { width: 100%; }
   .form-grid { grid-template-columns: 1fr; }
   .form-grid .full-field { grid-column: auto; }
+  .admin-header-label { display: none; }
+  .store-link { margin-left: auto; }
+  .taxonomy-grid { grid-template-columns: 1fr; }
+  .taxonomy-filter { align-items: stretch; flex-direction: column; }
+  .taxonomy-filter select { width: 100%; }
 }
 @media (max-width: 390px) {
   .product-grid { grid-template-columns: 1fr; }

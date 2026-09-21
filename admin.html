@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Painel administrativo da Vitrine" />
+    <title>Vitrine — painel administrativo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="admin-body">
+    <header class="topbar admin-header">
+      <a class="brand" href="admin.html" aria-label="Painel Vitrine"><span class="brand-mark">V</span><span>Vitrine Admin</span></a>
+      <div class="admin-header-label"><span class="status-dot"></span> API conectada</div>
+      <a class="store-link" href="index.html">Ver loja <span>↗</span></a>
+    </header>
+
+    <main class="admin admin-standalone">
+      <div class="admin-topbar">
+        <div><span class="eyebrow">GESTÃO DA LOJA</span><h1>Painel administrativo</h1><p>Gerencie produtos, categorias e subcategorias em um só lugar.</p></div>
+        <div class="admin-actions">
+          <button class="secondary-admin-button" id="syncProducts" type="button">↻ Sincronizar Fake Store</button>
+          <button class="primary-admin-button" id="newProduct" type="button">＋ Novo produto</button>
+        </div>
+      </div>
+
+      <nav class="admin-tabs" aria-label="Áreas administrativas">
+        <button class="active" type="button" data-admin-tab="products">Produtos</button>
+        <button type="button" data-admin-tab="categories">Categorias e subcategorias</button>
+      </nav>
+
+      <section id="productsView">
+        <div class="metric-grid">
+          <article><span>Produtos</span><strong id="metricTotal">—</strong><small>no catálogo</small></article>
+          <article><span>Ativos</span><strong id="metricActive">—</strong><small>visíveis na loja</small></article>
+          <article class="warning-metric"><span>Estoque baixo</span><strong id="metricLowStock">—</strong><small>5 unidades ou menos</small></article>
+          <article><span>Preço médio</span><strong id="metricAverage">—</strong><small>em todo o catálogo</small></article>
+        </div>
+
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <div><h2>Catálogo de produtos</h2><p id="adminCount">Carregando...</p></div>
+            <label class="admin-search"><span>⌕</span><input id="adminSearch" type="search" placeholder="Buscar no catálogo" /></label>
+          </div>
+          <div class="table-wrap">
+            <table class="product-table">
+              <thead><tr><th>Produto</th><th>Classificação</th><th>Origem</th><th>Preço</th><th>Estoque</th><th>Status</th><th><span class="sr-only">Ações</span></th></tr></thead>
+              <tbody id="adminTable"></tbody>
+            </table>
+          </div>
+          <div class="admin-empty hidden" id="adminEmpty"><p>Nenhum produto cadastrado.</p><button id="emptySync" type="button">Importar da Fake Store</button></div>
+        </div>
+      </section>
+
+      <section class="hidden" id="categoriesView">
+        <div class="taxonomy-grid">
+          <article class="admin-card taxonomy-card">
+            <div class="admin-card-header">
+              <div><h2>Categorias</h2><p id="categoryCount">0 categorias</p></div>
+              <button class="small-primary-button" id="newCategory" type="button">＋ Nova categoria</button>
+            </div>
+            <div class="taxonomy-list" id="categoryList"></div>
+          </article>
+
+          <article class="admin-card taxonomy-card">
+            <div class="admin-card-header taxonomy-header">
+              <div><h2>Subcategorias</h2><p id="subcategoryCount">0 subcategorias</p></div>
+              <button class="small-primary-button" id="newSubcategory" type="button">＋ Nova subcategoria</button>
+            </div>
+            <label class="taxonomy-filter">Filtrar por categoria<select id="subcategoryFilter"><option value="">Todas as categorias</option></select></label>
+            <div class="taxonomy-list" id="subcategoryList"></div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <dialog id="productFormDialog" class="form-dialog">
+      <form id="productForm">
+        <div class="form-dialog-header"><div><span class="eyebrow" id="formEyebrow">NOVO ITEM</span><h2 id="formTitle">Cadastrar produto</h2></div><button class="dialog-close" data-close="productFormDialog" type="button" aria-label="Fechar">×</button></div>
+        <input type="hidden" id="productId" />
+        <div class="form-grid">
+          <label class="full-field">Nome do produto<input id="productTitle" required minlength="2" maxlength="160" /></label>
+          <label>Categoria<select id="productCategory" required></select></label>
+          <label>Subcategoria<select id="productSubcategory"><option value="">Sem subcategoria</option></select></label>
+          <label>Preço (R$)<input id="productPrice" type="number" min="0.01" step="0.01" required /></label>
+          <label>Estoque<input id="productStock" type="number" min="0" step="1" required /></label>
+          <label>Produto ativo<select id="productActive"><option value="true">Sim</option><option value="false">Não</option></select></label>
+          <label class="full-field">URL da imagem<input id="productImage" type="url" required /></label>
+          <label class="full-field">Descrição<textarea id="productDescription" rows="4" required minlength="2" maxlength="1200"></textarea></label>
+        </div>
+        <div class="form-error hidden" id="formError"></div>
+        <div class="dialog-actions"><button class="secondary-button" data-close="productFormDialog" type="button">Cancelar</button><button class="primary-button" id="saveProduct" type="submit">Salvar produto</button></div>
+      </form>
+    </dialog>
+
+    <dialog id="categoryDialog" class="small-form-dialog">
+      <form id="categoryForm">
+        <div class="form-dialog-header"><div><span class="eyebrow">CLASSIFICAÇÃO</span><h2 id="categoryFormTitle">Nova categoria</h2></div><button class="dialog-close" data-close="categoryDialog" type="button">×</button></div>
+        <input type="hidden" id="categoryId" />
+        <label class="standalone-field">Nome da categoria<input id="categoryName" required minlength="2" maxlength="80" placeholder="Ex.: Eletrônicos" /></label>
+        <div class="form-error hidden" id="categoryError"></div>
+        <div class="dialog-actions"><button class="secondary-button" data-close="categoryDialog" type="button">Cancelar</button><button class="primary-button" type="submit">Salvar categoria</button></div>
+      </form>
+    </dialog>
+
+    <dialog id="subcategoryDialog" class="small-form-dialog">
+      <form id="subcategoryForm">
+        <div class="form-dialog-header"><div><span class="eyebrow">CLASSIFICAÇÃO</span><h2 id="subcategoryFormTitle">Nova subcategoria</h2></div><button class="dialog-close" data-close="subcategoryDialog" type="button">×</button></div>
+        <input type="hidden" id="subcategoryId" />
+        <label class="standalone-field">Categoria principal<select id="subcategoryCategory" required></select></label>
+        <label class="standalone-field">Nome da subcategoria<input id="subcategoryName" required minlength="2" maxlength="80" placeholder="Ex.: Smartphones" /></label>
+        <div class="form-error hidden" id="subcategoryError"></div>
+        <div class="dialog-actions"><button class="secondary-button" data-close="subcategoryDialog" type="button">Cancelar</button><button class="primary-button" type="submit">Salvar subcategoria</button></div>
+      </form>
+    </dialog>
+
+    <dialog id="deleteDialog" class="confirm-dialog">
+      <form method="dialog"><div class="danger-icon">!</div><h2 id="deleteTitle">Excluir item?</h2><p id="deleteMessage">Esta ação não poderá ser desfeita.</p><div class="dialog-actions"><button value="cancel" class="secondary-button">Cancelar</button><button value="default" class="danger-button" id="confirmDelete">Excluir</button></div></form>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="config.js"></script>
+    <script src="admin.js"></script>
+  </body>
+</html>
