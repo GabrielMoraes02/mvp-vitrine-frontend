@@ -22,21 +22,24 @@ button { color: inherit; }
 .announcement-bar span { position: relative; }
 .announcement-bar span + span::before { content: "•"; position: absolute; left: calc(clamp(28px, 7vw, 100px) / -2); color: var(--accent); }
 
-.topbar { position: sticky; top: 0; z-index: 20; height: 78px; padding: 0 5vw; display: flex; align-items: center; gap: 32px; background: rgba(248,247,243,.94); border-bottom: 1px solid rgba(16,33,63,.08); backdrop-filter: blur(18px); }
-.brand { display: flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font-family: Manrope, sans-serif; font-size: 22px; font-weight: 800; }
-.brand-mark { display: grid; place-items: center; width: 36px; height: 36px; color: white; background: var(--ink); border-radius: 11px 11px 9px 9px; font-size: 17px; }
-.search { flex: 1; max-width: 540px; display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: #eef1f5; border: 1px solid transparent; border-radius: 14px; transition: .2s; }
+.topbar { position: sticky; top: 0; z-index: 20; height: 72px; padding: 0 4vw; display: flex; align-items: center; gap: 22px; background: rgba(255,255,255,.94); border-bottom: 1px solid rgba(16,33,63,.08); box-shadow: 0 7px 25px rgba(16,33,63,.04); backdrop-filter: blur(18px); }
+.brand { display: flex; align-items: center; gap: 9px; color: var(--ink); text-decoration: none; font-family: Manrope, sans-serif; font-size: 21px; font-weight: 800; letter-spacing: -.035em; }
+.brand-mark { display: grid; place-items: center; width: 38px; height: 38px; color: white; background: var(--ink); border-radius: 12px; font-size: 17px; box-shadow: 0 7px 16px rgba(16,33,63,.14); }
+.search { flex: 1; max-width: 440px; height: 44px; display: flex; align-items: center; gap: 10px; padding: 0 11px 0 14px; background: #f2f4f7; border: 1px solid #edf0f4; border-radius: 12px; transition: .2s; }
 .search:focus-within { background: white; border-color: #bbc5d5; box-shadow: 0 0 0 4px rgba(16,33,63,.05); }
 .search input { width: 100%; background: transparent; border: 0; outline: 0; color: var(--ink); }
-.search kbd { padding: 3px 7px; color: #8a94a6; background: white; border: 1px solid #dce1e8; border-radius: 6px; font-size: 11px; }
-.nav-links { margin-left: auto; display: flex; align-items: center; gap: 22px; }
-.nav-links a, .nav-button { position: relative; padding: 26px 0 23px; color: var(--muted); background: none; border: 0; text-decoration: none; cursor: pointer; font-weight: 600; }
-.nav-links .active, .nav-links a:hover, .nav-button:hover { color: var(--ink); }
-.nav-links .active::after { content: ""; position: absolute; left: 0; right: 0; bottom: 15px; height: 2px; background: var(--accent); border-radius: 2px; }
-.nav-button span { display: inline-grid; place-items: center; min-width: 20px; height: 20px; margin-left: 4px; color: white; background: var(--accent); border-radius: 99px; font-size: 11px; }
-.cart-button { display: flex; align-items: center; gap: 8px; padding: 10px 13px; color: white; background: var(--ink); border: 0; border-radius: 13px; cursor: pointer; font-weight: 600; transition: transform .2s; }
-.cart-button:hover { transform: translateY(-2px); }
-.cart-button strong { display: grid; place-items: center; min-width: 22px; height: 22px; padding: 0 6px; color: var(--ink); background: white; border-radius: 99px; font-size: 12px; }
+.search svg { width: 18px; height: 18px; flex: 0 0 auto; fill: none; stroke: var(--ink); stroke-width: 2; stroke-linecap: round; }
+.search kbd { min-width: 38px; height: 28px; padding: 0 7px; display: flex; align-items: center; justify-content: center; gap: 3px; color: #8a94a6; background: white; border: 1px solid #dce1e8; border-bottom-width: 2px; border-radius: 7px; font-size: 10px; font-family: inherit; }
+.search kbd span { font-size: 11px; }
+.nav-links { margin-left: auto; padding: 4px; display: flex; align-items: center; gap: 2px; background: #f5f6f8; border-radius: 13px; }
+.nav-links a, .nav-button { min-height: 38px; padding: 0 12px; display: inline-flex; align-items: center; gap: 7px; color: var(--muted); background: transparent; border: 0; border-radius: 9px; text-decoration: none; cursor: pointer; font-size: 13px; font-weight: 700; transition: color .2s, background .2s, box-shadow .2s; }
+.nav-links .active, .nav-links a:hover, .nav-button:hover { color: var(--ink); background: white; box-shadow: 0 3px 10px rgba(16,33,63,.07); }
+.nav-button svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.nav-button strong { display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 5px; color: white; background: var(--accent); border-radius: 99px; font-size: 10px; }
+.cart-button { height: 44px; display: flex; align-items: center; gap: 8px; padding: 0 9px 0 14px; color: white; background: var(--ink); border: 0; border-radius: 12px; cursor: pointer; font-size: 13px; font-weight: 700; box-shadow: 0 7px 16px rgba(16,33,63,.13); transition: transform .2s, background .2s; }
+.cart-button:hover { background: #1c3154; transform: translateY(-1px); }
+.cart-button svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.cart-button strong { display: grid; place-items: center; min-width: 25px; height: 25px; padding: 0 6px; color: var(--ink); background: white; border-radius: 8px; font-size: 11px; }
 .admin-mobile { display: none; width: 42px; height: 42px; place-items: center; background: white; border: 1px solid var(--line); border-radius: 12px; cursor: pointer; font-size: 18px; }
 
 main { overflow: hidden; }

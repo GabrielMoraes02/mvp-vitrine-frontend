@@ -19,20 +19,20 @@
       </a>
 
       <label class="search" aria-label="Buscar produtos">
-        <span>⌕</span>
+        <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg>
         <input id="searchInput" type="search" placeholder="Buscar produtos" autocomplete="off" />
-        <kbd>⌘ K</kbd>
+        <kbd><span>⌘</span>K</kbd>
       </label>
 
       <nav class="nav-links" aria-label="Navegação principal">
         <a class="active" href="#inicio" data-store-link>Loja</a>
         <a href="#categorias">Categorias</a>
         <a href="#produtos">Produtos</a>
-        <button class="nav-button" id="favoritesButton" type="button">Favoritos <span id="favoriteCount">0</span></button>
+        <button class="nav-button" id="favoritesButton" type="button"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20.8 4.7a5.5 5.5 0 0 0-7.8 0L12 5.8l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.4 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"></path></svg><span class="nav-button-label">Favoritos</span><strong id="favoriteCount">0</strong></button>
       </nav>
 
       <button class="cart-button" id="openCart" type="button" aria-label="Abrir carrinho">
-        <span>🛍</span>
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 8h12l1 12H5L6 8Z"></path><path d="M9 9V6a3 3 0 0 1 6 0v3"></path></svg>
         <span class="cart-label">Carrinho</span>
         <strong id="cartCount">0</strong>
       </button>
