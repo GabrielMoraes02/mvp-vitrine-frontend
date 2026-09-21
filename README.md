@@ -13,9 +13,11 @@ A Vitrine é um MVP acadêmico composto por uma loja responsiva e um painel admi
 ## Funcionalidades
 
 - Catálogo responsivo com pesquisa, categorias e ordenação.
+- Vitrine de categorias, seções promocionais, planejamento de orçamento e rodapé completo.
 - Detalhes de produto, favoritos e carrinho persistente no navegador.
 - Meta de orçamento com indicador de progresso.
-- Painel com métricas de catálogo e alertas de estoque baixo.
+- Painel com visão geral, distribuição por categoria, atividade recente e alertas de estoque baixo.
+- Gestão independente de categorias e subcategorias, com vínculo aos produtos.
 - Cadastro, edição e exclusão de produtos pela API própria.
 - Sincronização de produtos da Fake Store.
 - Mensagens de carregamento, sucesso e erro.

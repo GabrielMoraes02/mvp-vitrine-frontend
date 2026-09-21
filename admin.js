@@ -25,6 +25,7 @@ async function loadAll() {
     state.categories = categories;
     state.subcategories = subcategories;
     renderMetrics(summary);
+    renderDashboard(summary);
     renderProducts();
     renderTaxonomy();
     fillCategorySelects();
@@ -36,6 +37,21 @@ function renderMetrics(summary) {
   $("#metricActive").textContent = summary.active_products;
   $("#metricLowStock").textContent = summary.low_stock_products;
   $("#metricAverage").textContent = money(summary.average_price);
+}
+
+function renderDashboard(summary) {
+  const categoryEntries = Object.entries(summary.products_by_category).sort((a, b) => b[1] - a[1]);
+  const maximum = Math.max(...categoryEntries.map(([, count]) => count), 1);
+  $("#dashboardCategoryTotal").textContent = `${categoryEntries.length} ${categoryEntries.length === 1 ? "categoria" : "categorias"}`;
+  $("#categoryChart").innerHTML = categoryEntries.length ? categoryEntries.map(([name, count]) => `
+    <div class="chart-row"><div class="chart-label"><span>${escapeHtml(name)}</span><strong>${count}</strong></div><div class="chart-track"><span style="width:${Math.max(8, count / maximum * 100)}%"></span></div></div>`).join("") : `<div class="dashboard-empty">Sincronize produtos para visualizar a distribuição.</div>`;
+
+  const lowStock = state.products.filter(product => product.stock <= 5).sort((a, b) => a.stock - b.stock).slice(0, 5);
+  $("#stockAlertList").innerHTML = lowStock.length ? lowStock.map(product => `
+    <div class="stock-alert-item"><img src="${escapeHtml(product.image)}" alt="" /><div><strong>${escapeHtml(product.title)}</strong><small>${escapeHtml(categoryById(product.category_id)?.name || product.category)}</small></div><span>${product.stock} un.</span></div>`).join("") : `<div class="dashboard-success">✓ Nenhum produto com estoque baixo.</div>`;
+
+  $("#recentProducts").innerHTML = state.products.slice(0, 5).map(product => `
+    <div class="recent-product-item"><img src="${escapeHtml(product.image)}" alt="" /><div><strong>${escapeHtml(product.title)}</strong><small>${money(product.price)} • ${product.source === "fake_store" ? "Fake Store" : "Local"}</small></div><span class="status-dot"></span></div>`).join("");
 }
 
 function categoryById(id) { return state.categories.find(item => item.id === Number(id)); }
@@ -165,10 +181,10 @@ async function confirmDelete() {
 }
 
 async function syncProducts() {
-  const button = $("#syncProducts"); button.disabled = true; button.textContent = "Sincronizando...";
+  const buttons = [$("#syncProducts"), $("#dashboardSync")].filter(Boolean); buttons.forEach(button => { button.disabled = true; button.textContent = "Sincronizando..."; });
   try { const result = await api("/products/sync", { method: "POST" }); showToast(`${result.imported} importados e ${result.updated} atualizados`); await loadAll(); }
   catch (error) { showToast(error.message); }
-  finally { button.disabled = false; button.textContent = "↻ Sincronizar Fake Store"; }
+  finally { buttons.forEach((button, index) => { button.disabled = false; button.textContent = index === 0 ? "↻ Sincronizar produtos" : "Sincronizar agora"; }); }
 }
 
 function showFormError(selector, message) { $(selector).textContent = message; $(selector).classList.remove("hidden"); }
@@ -177,13 +193,17 @@ function showToast(message) { const toast = $("#toast"); toast.textContent = mes
 
 $$('[data-admin-tab]').forEach(button => button.addEventListener("click", () => {
   $$('[data-admin-tab]').forEach(item => item.classList.toggle("active", item === button));
+  $("#dashboardView").classList.toggle("hidden", button.dataset.adminTab !== "dashboard");
   $("#productsView").classList.toggle("hidden", button.dataset.adminTab !== "products");
   $("#categoriesView").classList.toggle("hidden", button.dataset.adminTab !== "categories");
   $("#newProduct").classList.toggle("hidden", button.dataset.adminTab !== "products");
 }));
+function goToProducts() { document.querySelector('[data-admin-tab="products"]').click(); }
+$$('[data-go-products]').forEach(button => button.addEventListener("click", goToProducts));
 $("#adminSearch").addEventListener("input", renderProducts);
 $("#newProduct").addEventListener("click", () => openProductForm());
 $("#syncProducts").addEventListener("click", syncProducts);
+$("#dashboardSync").addEventListener("click", syncProducts);
 $("#emptySync").addEventListener("click", syncProducts);
 $("#productCategory").addEventListener("change", event => fillSubcategorySelect(event.target.value));
 $("#productForm").addEventListener("submit", saveProduct);

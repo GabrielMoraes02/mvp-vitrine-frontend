@@ -21,23 +21,50 @@
       <div class="admin-topbar">
         <div><span class="eyebrow">GESTÃO DA LOJA</span><h1>Painel administrativo</h1><p>Gerencie produtos, categorias e subcategorias em um só lugar.</p></div>
         <div class="admin-actions">
-          <button class="secondary-admin-button" id="syncProducts" type="button">↻ Sincronizar Fake Store</button>
-          <button class="primary-admin-button" id="newProduct" type="button">＋ Novo produto</button>
+          <button class="secondary-admin-button" id="syncProducts" type="button">↻ Sincronizar produtos</button>
+          <button class="primary-admin-button hidden" id="newProduct" type="button">＋ Novo produto</button>
         </div>
       </div>
 
       <nav class="admin-tabs" aria-label="Áreas administrativas">
-        <button class="active" type="button" data-admin-tab="products">Produtos</button>
+        <button class="active" type="button" data-admin-tab="dashboard">Visão geral</button>
+        <button type="button" data-admin-tab="products">Produtos</button>
         <button type="button" data-admin-tab="categories">Categorias e subcategorias</button>
       </nav>
 
-      <section id="productsView">
+      <section id="dashboardView">
         <div class="metric-grid">
           <article><span>Produtos</span><strong id="metricTotal">—</strong><small>no catálogo</small></article>
           <article><span>Ativos</span><strong id="metricActive">—</strong><small>visíveis na loja</small></article>
           <article class="warning-metric"><span>Estoque baixo</span><strong id="metricLowStock">—</strong><small>5 unidades ou menos</small></article>
           <article><span>Preço médio</span><strong id="metricAverage">—</strong><small>em todo o catálogo</small></article>
         </div>
+
+        <div class="dashboard-grid">
+          <article class="admin-card dashboard-card category-overview-card">
+            <div class="dashboard-card-title"><div><span class="eyebrow">CATÁLOGO</span><h2>Produtos por categoria</h2></div><span class="dashboard-chip" id="dashboardCategoryTotal">— categorias</span></div>
+            <div class="category-chart" id="categoryChart"></div>
+          </article>
+
+          <article class="admin-card dashboard-card">
+            <div class="dashboard-card-title"><div><span class="eyebrow">ATENÇÃO</span><h2>Estoque baixo</h2></div><button class="text-action" type="button" data-go-products>Ver produtos</button></div>
+            <div class="stock-alert-list" id="stockAlertList"></div>
+          </article>
+
+          <article class="admin-card dashboard-card integration-card">
+            <div class="integration-symbol">↻</div>
+            <div><span class="eyebrow">INTEGRAÇÃO EXTERNA</span><h2>Fake Store conectada</h2><p>Atualize preços, avaliações e novos itens do catálogo público quando precisar.</p></div>
+            <button class="primary-admin-button" id="dashboardSync" type="button">Sincronizar agora</button>
+          </article>
+
+          <article class="admin-card dashboard-card">
+            <div class="dashboard-card-title"><div><span class="eyebrow">ATIVIDADE</span><h2>Produtos recentes</h2></div><button class="text-action" type="button" data-go-products>Gerenciar</button></div>
+            <div class="recent-products" id="recentProducts"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="hidden" id="productsView">
 
         <div class="admin-card">
           <div class="admin-card-header">

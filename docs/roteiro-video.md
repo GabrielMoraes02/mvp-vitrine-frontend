@@ -20,7 +20,7 @@ Mostrar o fluxograma do README principal.
 
 - Abrir `https://fakestoreapi.com/products` rapidamente.
 - Explicar que a API fornece os produtos públicos em JSON.
-- Mostrar o botão “Sincronizar Fake Store” no painel administrativo.
+- Mostrar o botão “Sincronizar produtos” no painel administrativo.
 - Executar a sincronização e mostrar a mensagem de sucesso.
 
 ## 4. API própria e Swagger - 1 minuto e 30 segundos
@@ -41,10 +41,11 @@ Abrir `http://localhost:8000/docs` e executar:
 3. Abrir detalhes, favoritar e adicionar ao carrinho.
 4. Alterar a quantidade, remover um item e editar a meta de orçamento.
 5. Abrir o painel administrativo.
-6. Cadastrar um produto e confirmar que ele aparece na tabela.
-7. Editar preço e estoque.
-8. Excluir o produto.
-9. Voltar à loja e mostrar a atualização do catálogo.
+6. Mostrar a visão geral, o gráfico por categoria e os alertas de estoque.
+7. Criar uma categoria e uma subcategoria.
+8. Cadastrar um produto usando essa classificação.
+9. Editar preço e estoque e depois excluir o produto temporário.
+10. Voltar à loja e mostrar a atualização do catálogo.
 
 ## Encerramento - 10 segundos
 

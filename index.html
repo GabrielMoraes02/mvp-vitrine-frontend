@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <div class="announcement-bar"><span>Compra planejada, escolhas melhores.</span><span>Catálogo atualizado pela Fake Store</span><span>Controle seu orçamento em tempo real</span></div>
     <header class="topbar">
       <a class="brand" href="#inicio" aria-label="Ir para o início">
         <span class="brand-mark">V</span>
@@ -25,6 +26,8 @@
 
       <nav class="nav-links" aria-label="Navegação principal">
         <a class="active" href="#inicio" data-store-link>Loja</a>
+        <a href="#categorias">Categorias</a>
+        <a href="#produtos">Produtos</a>
         <button class="nav-button" id="favoritesButton" type="button">Favoritos <span id="favoriteCount">0</span></button>
       </nav>
 
@@ -63,6 +66,14 @@
         <article><span>◇</span><div><strong>Seleção especial</strong><small>Produtos escolhidos para você</small></div></article>
         <article><span>♻</span><div><strong>Compra consciente</strong><small>Planeje antes de finalizar</small></div></article>
         <article><span>◎</span><div><strong>Controle de orçamento</strong><small>Acompanhe seus gastos</small></div></article>
+      </section>
+
+      <section class="category-showcase" id="categorias" data-store-section>
+        <div class="section-heading">
+          <div><span class="eyebrow">EXPLORE SEU ESTILO</span><h2>Compre por categoria</h2></div>
+          <p>Encontre mais rápido o que combina com você.</p>
+        </div>
+        <div class="category-showcase-grid" id="categoryShowcase"></div>
       </section>
 
       <section class="catalog" id="produtos" data-store-section>
@@ -104,7 +115,7 @@
             <p>Gerencie o catálogo persistido pela API Vitrine.</p>
           </div>
           <div class="admin-actions">
-            <button class="secondary-admin-button" id="syncProducts" type="button">↻ Sincronizar Fake Store</button>
+            <button class="secondary-admin-button" id="syncProducts" type="button">↻ Sincronizar produtos</button>
             <button class="primary-admin-button" id="newProduct" type="button">＋ Novo produto</button>
             <button class="admin-exit" id="exitAdmin" type="button">Voltar à loja</button>
           </div>
@@ -131,7 +142,25 @@
           <div class="admin-empty hidden" id="adminEmpty"><p>Nenhum produto cadastrado.</p><button id="emptySync" type="button">Importar da Fake Store</button></div>
         </div>
       </section>
+
+      <section class="budget-feature" data-store-section>
+        <div class="budget-feature-visual" aria-hidden="true">
+          <div class="budget-ring"><span>72%</span><small>da meta</small></div>
+          <div class="budget-mini-card"><span>Seu planejamento</span><strong>R$ 432,00</strong><small>de R$ 600,00</small></div>
+        </div>
+        <div class="budget-feature-copy"><span class="eyebrow">COMPRA CONSCIENTE</span><h2>Escolha o que cabe nos seus planos.</h2><p>Defina uma meta e acompanhe o valor do carrinho enquanto escolhe. A Vitrine ajuda você a comparar desejos e orçamento antes de finalizar.</p><button id="budgetFeatureButton" type="button">Planejar minha compra <span>→</span></button></div>
+      </section>
+
+      <section class="newsletter" data-store-section>
+        <div><span class="eyebrow">FIQUE POR DENTRO</span><h2>Novidades na sua vitrine</h2><p>Receba atualizações sobre novos produtos e categorias.</p></div>
+        <form id="newsletterForm"><label class="sr-only" for="newsletterEmail">Seu e-mail</label><input id="newsletterEmail" type="email" placeholder="Seu melhor e-mail" required /><button type="submit">Quero receber</button></form>
+      </section>
     </main>
+
+    <footer class="site-footer" data-store-section>
+      <div class="footer-main"><div class="footer-brand"><a class="brand" href="#inicio"><span class="brand-mark">V</span><span>Vitrine</span></a><p>Uma experiência acadêmica de catálogo, orçamento e compras simuladas.</p></div><div><strong>Navegue</strong><a href="#inicio">Início</a><a href="#categorias">Categorias</a><a href="#produtos">Produtos</a></div><div><strong>Recursos</strong><button id="footerFavorites" type="button">Favoritos</button><button id="footerBudget" type="button">Meu orçamento</button><a href="https://fakestoreapi.com/" target="_blank" rel="noreferrer">Fake Store API ↗</a></div><div><strong>Projeto</strong><span>FastAPI + SQLite</span><span>Interface responsiva</span><span>Docker</span></div></div>
+      <div class="footer-bottom"><span>© 2026 Vitrine. Projeto acadêmico.</span><span>Compras e pagamentos são simulados.</span></div>
+    </footer>
 
     <div class="overlay" id="overlay"></div>
     <aside class="cart-drawer" id="cartDrawer" aria-hidden="true" aria-label="Meu carrinho">

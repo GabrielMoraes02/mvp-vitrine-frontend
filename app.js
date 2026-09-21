@@ -58,6 +58,7 @@ async function loadStore({ syncWhenEmpty = true } = {}) {
     }
     state.products = result.items;
     renderCategories();
+    renderCategoryShowcase();
     renderProducts();
     renderCart();
   } catch (error) {
@@ -83,6 +84,22 @@ function renderCategories() {
     <button type="button" role="tab" class="${state.category === category ? "active" : ""}" data-category="${escapeHtml(category)}">
       ${escapeHtml(categoryName(category))}
     </button>`).join("");
+}
+
+function renderCategoryShowcase() {
+  const visualMap = {
+    electronics: { label: "Eletrônicos", icon: "⌁", tone: "navy" },
+    jewelery: { label: "Joias", icon: "◇", tone: "gold" },
+    "men's clothing": { label: "Masculino", icon: "⌇", tone: "blue" },
+    "women's clothing": { label: "Feminino", icon: "✦", tone: "coral" }
+  };
+  const categories = [...new Set(state.products.map(product => product.category))];
+  $("#categoryShowcase").innerHTML = categories.map((category, index) => {
+    const visual = visualMap[category] || { label: category, icon: "＋", tone: ["navy", "coral", "gold", "blue"][index % 4] };
+    const count = state.products.filter(product => product.category === category).length;
+    const sample = state.products.find(product => product.category === category);
+    return `<button class="category-showcase-card ${visual.tone}" type="button" data-showcase-category="${escapeHtml(category)}"><div><span class="category-symbol">${visual.icon}</span><strong>${escapeHtml(visual.label)}</strong><small>${count} ${count === 1 ? "produto" : "produtos"}</small><em>Explorar →</em></div>${sample ? `<img src="${escapeHtml(sample.image)}" alt="" />` : ""}</button>`;
+  }).join("");
 }
 
 function getVisibleProducts() {
@@ -116,7 +133,7 @@ function renderProducts() {
       <div class="product-body">
         <span class="product-category">${escapeHtml(categoryName(product.category))}</span>
         <h3>${escapeHtml(product.title)}</h3>
-        <div class="rating">★ ${Number(product.rating).toFixed(1)} <span>(${product.rating_count})</span></div>
+        <div class="rating">★ ${Number(product.rating).toFixed(1)} <span>(${product.rating_count})</span>${product.stock <= 5 ? `<span class="low-stock-inline">Últimas unidades</span>` : ""}</div>
         <div class="product-footer"><strong class="product-price">${formatMoney(product.price)}</strong><button type="button" class="add-button" data-add="${product.id}" ${product.stock === 0 ? "disabled" : ""}>${product.stock === 0 ? "Sem estoque" : "Adicionar"}</button></div>
       </div>
     </article>`).join("");
@@ -368,6 +385,12 @@ $("#categoryTabs").addEventListener("click", event => {
   state.favoritesOnly = false;
   renderCategories(); renderProducts();
 });
+$("#categoryShowcase").addEventListener("click", event => {
+  const card = event.target.closest("[data-showcase-category]");
+  if (!card) return;
+  state.category = card.dataset.showcaseCategory; state.favoritesOnly = false;
+  renderCategories(); renderProducts(); $("#produtos").scrollIntoView({ behavior: "smooth" });
+});
 $("#productGrid").addEventListener("click", event => {
   const favorite = event.target.closest("[data-favorite]");
   const add = event.target.closest("[data-add]");
@@ -406,6 +429,10 @@ $("#saveBudget").addEventListener("click", event => {
   event.preventDefault(); state.budget = Number($("#budgetInput").value); $("#budgetDialog").close(); renderCart(); showToast("Meta atualizada");
 });
 $("#checkoutButton").addEventListener("click", () => showToast("Compra simulada com sucesso!"));
+$("#budgetFeatureButton").addEventListener("click", () => { $("#budgetInput").value = state.budget; $("#budgetDialog").showModal(); });
+$("#footerBudget").addEventListener("click", () => { $("#budgetInput").value = state.budget; $("#budgetDialog").showModal(); });
+$("#footerFavorites").addEventListener("click", () => $("#favoritesButton").click());
+$("#newsletterForm").addEventListener("submit", event => { event.preventDefault(); event.target.reset(); showToast("Cadastro realizado para esta demonstração"); });
 $("#adminButton")?.addEventListener("click", openAdmin);
 $("#adminMobile")?.addEventListener("click", openAdmin);
 $("#exitAdmin").addEventListener("click", closeAdmin);
