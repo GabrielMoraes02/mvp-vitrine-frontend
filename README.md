@@ -26,7 +26,7 @@ Clone os repositórios do front-end e da API na mesma pasta, mantendo a estrutur
 
 ```text
 pasta-do-projeto/
-├── prototipo-vitrine/
+├── vitrine-frontend/
 └── vitrine-api/
 ```
 
