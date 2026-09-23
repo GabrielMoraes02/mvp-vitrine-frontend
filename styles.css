@@ -407,7 +407,11 @@ dialog::backdrop { background: rgba(7,16,32,.58); backdrop-filter: blur(4px); }
   .footer-brand { grid-column: 1 / -1; }
   .footer-bottom { align-items: flex-start; flex-direction: column; gap: 8px; }
   .admin-header-label { display: none; }
-  .store-link { margin-left: auto; }
+  .admin-header .brand { order: 1; }
+  .admin-header .store-link { order: 2; margin-left: auto; }
+  .admin-tabs { width: 100%; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .admin-tabs::-webkit-scrollbar { display: none; }
+  .admin-tabs button { flex: 0 0 auto; }
   .taxonomy-grid { grid-template-columns: 1fr; }
   .integration-card { grid-template-columns: 48px 1fr; }
   .integration-card button { grid-column: 1 / -1; }
@@ -606,4 +610,66 @@ dialog::backdrop { background: rgba(7,16,32,.58); backdrop-filter: blur(4px); }
   .auth-benefits { gap: 8px; }
   .auth-visual { display: none; }
   .checkout-empty, .order-success { margin: 35px auto; padding: 32px 22px; }
+}
+
+/* Relatório de vendas e controle financeiro */
+.finance-toolbar { max-width: 1440px; margin: 0 auto 22px; display: flex; justify-content: space-between; align-items: end; gap: 25px; }
+.finance-toolbar h2 { margin: 7px 0 3px; font: 800 31px Manrope; letter-spacing: -.035em; }
+.finance-toolbar p { margin: 0; color: var(--muted); }
+.finance-toolbar-actions { display: flex; align-items: end; gap: 10px; }
+.finance-toolbar-actions label { display: grid; gap: 6px; color: var(--muted); font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; }
+.finance-toolbar-actions select { min-width: 175px; padding: 10px 34px 10px 12px; color: var(--ink); background: white; border: 1px solid var(--line); border-radius: 10px; }
+.finance-metrics { max-width: 1440px; margin: 0 auto 18px; display: grid; grid-template-columns: repeat(4,1fr); gap: 13px; }
+.finance-metrics article { position: relative; padding: 22px; overflow: hidden; background: white; border: 1px solid var(--line); border-radius: 15px; }
+.finance-metrics article::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: #9ca7b8; }
+.finance-metrics article.revenue::before { background: var(--green); }
+.finance-metrics article.expense::before { background: var(--accent); }
+.finance-metrics article.balance::before { background: #4267a8; }
+.finance-metrics span, .finance-metrics small { display: block; color: var(--muted); }
+.finance-metrics span { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; }
+.finance-metrics strong { display: block; margin: 9px 0 5px; font: 800 27px Manrope; }
+.finance-metrics .revenue strong { color: #087a57; }
+.finance-metrics .expense strong { color: #c44532; }
+.finance-metrics strong.negative { color: #c44532; }
+.finance-grid { max-width: 1440px; margin: 0 auto 18px; display: grid; grid-template-columns: 1.35fr 1fr; gap: 18px; }
+.finance-card { width: 100%; min-height: 310px; padding: 24px; }
+.sales-chart { min-height: 225px; display: flex; align-items: stretch; gap: 9px; overflow-x: auto; }
+.sales-bar-column { min-width: 58px; flex: 1; display: grid; grid-template-rows: 27px 1fr 20px; gap: 7px; align-items: end; text-align: center; }
+.sales-bar-column > strong { overflow: hidden; color: var(--muted); text-overflow: ellipsis; font-size: 9px; }
+.sales-bar-column > div { height: 160px; display: flex; align-items: end; justify-content: center; background: linear-gradient(to top,#f3f5f8 1px,transparent 1px); background-size: 100% 40px; border-bottom: 1px solid var(--line); }
+.sales-bar-column > div span { width: min(32px,70%); min-height: 8px; background: linear-gradient(180deg,#ff8d79,var(--accent)); border-radius: 7px 7px 2px 2px; transition: height .35s; }
+.sales-bar-column small { color: var(--muted); font-size: 10px; }
+.payment-breakdown, .top-products, .expense-list { display: grid; }
+.payment-row, .top-product-row, .expense-row { padding: 13px 0; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--line); }
+.payment-row:last-child, .top-product-row:last-child, .expense-row:last-child { border-bottom: 0; }
+.payment-row > div { flex: 1; display: flex; align-items: center; gap: 11px; }
+.payment-symbol { width: 40px; height: 40px; display: grid; place-items: center; color: #315a9e; background: #eaf1fd; border-radius: 11px; font-size: 18px; }
+.payment-row strong, .payment-row small, .top-product-row strong, .top-product-row small, .expense-row strong, .expense-row small { display: block; }
+.payment-row small, .top-product-row small, .expense-row small { margin-top: 3px; color: var(--muted); font-size: 11px; }
+.payment-row > span { font: 800 17px Manrope; }
+.top-product-row > span { width: 30px; height: 30px; display: grid; place-items: center; color: var(--accent-dark); background: var(--soft-coral); border-radius: 9px; font-weight: 800; }
+.top-product-row > div, .expense-row > div { min-width: 0; flex: 1; }
+.top-product-row strong, .expense-row strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.top-product-row b { white-space: nowrap; }
+.expense-row b { color: #c44532; white-space: nowrap; }
+.expense-row button { width: 28px; height: 28px; display: grid; place-items: center; color: #c44532; background: #fff0ed; border: 0; border-radius: 8px; cursor: pointer; font-size: 17px; }
+.finance-empty { min-height: 160px; padding: 35px 15px; display: grid; place-items: center; color: var(--muted); text-align: center; }
+.orders-card { max-width: 1440px; margin: 0 auto; }
+
+@media (max-width: 1050px) {
+  .finance-metrics { grid-template-columns: repeat(2,1fr); }
+  .finance-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  .finance-toolbar { align-items: stretch; flex-direction: column; }
+  .finance-toolbar-actions { align-items: stretch; flex-direction: column; }
+  .finance-toolbar-actions select { width: 100%; }
+  .finance-metrics { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .finance-metrics article { padding: 17px; }
+  .finance-metrics strong { font-size: 21px; }
+  .finance-card { padding: 19px; }
+  .sales-bar-column { min-width: 54px; }
+}
+@media (max-width: 430px) {
+  .finance-metrics { grid-template-columns: 1fr; }
 }

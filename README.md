@@ -1,6 +1,6 @@
 # Vitrine - loja e painel de gestão
 
-A Vitrine é um MVP acadêmico composto por uma loja responsiva e um painel administrativo. Clientes podem pesquisar produtos, usar filtros, favoritar itens, montar um carrinho e acompanhar uma meta de orçamento. Administradores sincronizam o catálogo da Fake Store API e gerenciam produtos persistidos pela API própria.
+A Vitrine é um MVP acadêmico composto por uma loja responsiva e um painel administrativo. Clientes podem pesquisar produtos, usar filtros, favoritar itens, entrar em sua conta, montar um carrinho e concluir uma compra simulada. Administradores gerenciam o catálogo, acompanham vendas e controlam receitas e despesas persistidas pela API própria.
 
 ![Arquitetura da aplicação](docs/arquitetura.svg)
 
@@ -15,9 +15,14 @@ A Vitrine é um MVP acadêmico composto por uma loja responsiva e um painel admi
 - Catálogo responsivo com pesquisa, categorias e ordenação.
 - Vitrine de categorias, seções promocionais, planejamento de orçamento e rodapé completo.
 - Detalhes de produto, favoritos e carrinho persistente no navegador.
+- Login do cliente e checkout completo com entrega e formas de pagamento.
+- Pedidos persistidos, baixa automática de estoque e número de pedido.
 - Meta de orçamento com indicador de progresso.
 - Painel com visão geral, distribuição por categoria, atividade recente e alertas de estoque baixo.
 - Gestão independente de categorias e subcategorias, com vínculo aos produtos.
+- Relatório financeiro com faturamento, despesas, saldo líquido e ticket médio.
+- Gráficos de vendas, formas de pagamento, produtos mais vendidos e pedidos recentes.
+- Cadastro e exclusão de despesas por categoria e período.
 - Cadastro, edição e exclusão de produtos pela API própria.
 - Sincronização de produtos da Fake Store.
 - Mensagens de carregamento, sucesso e erro.
@@ -66,6 +71,10 @@ Acesse `http://localhost:3000`. Para usar outra URL de API, altere `config.js`.
 | DELETE | `/api/products/{id}` | Excluir produto |
 | POST | `/api/products/sync` | Importar e atualizar o catálogo externo |
 | GET | `/api/dashboard` | Carregar as métricas administrativas |
+| POST | `/api/orders` | Registrar a compra e atualizar o estoque |
+| GET | `/api/orders` | Listar pedidos recentes |
+| GET | `/api/reports/sales` | Gerar o relatório de vendas e financeiro |
+| POST/DELETE | `/api/expenses` | Registrar e excluir despesas |
 
 ## API externa
 
@@ -87,6 +96,10 @@ A aplicação utiliza a [Fake Store API](https://fakestoreapi.com/) por meio da 
 ├── app.js
 ├── admin.html
 ├── admin.js
+├── login.html
+├── login.js
+├── checkout.html
+├── checkout.js
 ├── config.js
 ├── index.html
 ├── styles.css

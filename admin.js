@@ -1,5 +1,5 @@
 const API_URL = window.VITRINE_CONFIG?.apiUrl || "http://localhost:8000/api";
-const state = { products: [], categories: [], subcategories: [], deleteTarget: null };
+const state = { products: [], categories: [], subcategories: [], report: null, deleteTarget: null };
 const $ = selector => document.querySelector(selector);
 const $$ = selector => [...document.querySelectorAll(selector)];
 const money = value => Number(value).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
@@ -18,18 +18,73 @@ async function api(path, options = {}) {
 
 async function loadAll() {
   try {
-    const [products, summary, categories, subcategories] = await Promise.all([
-      api("/products?page_size=100&sort=newest"), api("/dashboard"), api("/categories"), api("/subcategories")
+    const [products, summary, categories, subcategories, report] = await Promise.all([
+      api("/products?page_size=100&sort=newest"), api("/dashboard"), api("/categories"), api("/subcategories"), api(`/reports/sales?days=${$("#reportPeriod").value}`)
     ]);
     state.products = products.items;
     state.categories = categories;
     state.subcategories = subcategories;
+    state.report = report;
     renderMetrics(summary);
     renderDashboard(summary);
     renderProducts();
     renderTaxonomy();
     fillCategorySelects();
+    renderFinance(report);
   } catch (error) { showToast(error.message); }
+}
+
+function paymentLabel(method) {
+  return ({ card: "Cartão", pix: "Pix", boleto: "Boleto" })[method] || method;
+}
+
+function renderFinance(report) {
+  $("#financeRevenue").textContent = money(report.total_revenue);
+  $("#financeExpenses").textContent = money(report.total_expenses);
+  $("#financeBalance").textContent = money(report.net_balance);
+  $("#financeBalance").classList.toggle("negative", report.net_balance < 0);
+  $("#financeTicket").textContent = money(report.average_ticket);
+  $("#financeOrders").textContent = `${report.orders_count} ${report.orders_count === 1 ? "pedido" : "pedidos"}`;
+  $("#financeItems").textContent = `${report.items_sold} ${report.items_sold === 1 ? "item vendido" : "itens vendidos"}`;
+  $("#salesPeriodLabel").textContent = `${report.days} dias`;
+
+  const maxRevenue = Math.max(...report.sales_by_day.map(item => item.revenue), 1);
+  $("#salesChart").innerHTML = report.sales_by_day.length ? report.sales_by_day.map(item => {
+    const date = new Date(`${item.date}T12:00:00`).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" });
+    return `<div class="sales-bar-column" title="${date}: ${money(item.revenue)}"><strong>${money(item.revenue)}</strong><div><span style="height:${Math.max(10, item.revenue / maxRevenue * 100)}%"></span></div><small>${date}</small></div>`;
+  }).join("") : `<div class="finance-empty">As vendas aparecerão aqui depois do primeiro pedido.</div>`;
+
+  const paymentTotal = Math.max(report.orders_count, 1);
+  $("#paymentBreakdown").innerHTML = report.payment_methods.length ? report.payment_methods.map(item => `
+    <div class="payment-row"><div><span class="payment-symbol">${item.method === "pix" ? "◆" : item.method === "card" ? "▣" : "▤"}</span><div><strong>${paymentLabel(item.method)}</strong><small>${item.orders} pedidos • ${money(item.revenue)}</small></div></div><span>${Math.round(item.orders / paymentTotal * 100)}%</span></div>`).join("") : `<div class="finance-empty">Nenhum pagamento no período.</div>`;
+
+  $("#topProducts").innerHTML = report.top_products.length ? report.top_products.map((item, index) => `
+    <div class="top-product-row"><span>${index + 1}</span><div><strong>${escapeHtml(item.title)}</strong><small>${item.quantity} vendidos</small></div><b>${money(item.revenue)}</b></div>`).join("") : `<div class="finance-empty">Nenhum produto vendido no período.</div>`;
+
+  $("#expenseList").innerHTML = report.expenses.length ? report.expenses.map(item => `
+    <div class="expense-row"><div><strong>${escapeHtml(item.description)}</strong><small>${escapeHtml(item.category)} • ${new Date(`${item.expense_date}T12:00:00`).toLocaleDateString("pt-BR")}</small></div><b>− ${money(item.amount)}</b><button type="button" data-delete-expense="${item.id}" aria-label="Excluir despesa">×</button></div>`).join("") : `<div class="finance-empty">Nenhuma despesa registrada no período.</div>`;
+
+  $("#recentOrdersTable").innerHTML = report.recent_orders.map(order => `
+    <tr><td><strong>#${escapeHtml(order.order_number)}</strong></td><td>${escapeHtml(order.customer_name)}</td><td>${new Date(order.created_at).toLocaleDateString("pt-BR")}</td><td>${paymentLabel(order.payment_method)}</td><td><span class="status-badge active">Pago</span></td><td><strong>${money(order.total)}</strong></td></tr>`).join("");
+  $("#ordersEmpty").classList.toggle("hidden", !!report.recent_orders.length);
+}
+
+function openExpenseForm() {
+  $("#expenseForm").reset(); $("#expenseError").classList.add("hidden");
+  $("#expenseDate").value = new Date().toISOString().slice(0, 10);
+  $("#expenseDialog").showModal();
+}
+
+async function saveExpense(event) {
+  event.preventDefault();
+  const payload = { description: $("#expenseDescription").value.trim(), category: $("#expenseCategory").value, amount: Number($("#expenseAmount").value), expense_date: $("#expenseDate").value };
+  try { await api("/expenses", { method: "POST", body: JSON.stringify(payload) }); $("#expenseDialog").close(); showToast("Despesa registrada"); await loadAll(); }
+  catch (error) { showFormError("#expenseError", error.message); }
+}
+
+async function deleteExpense(id) {
+  try { await api(`/expenses/${id}`, { method: "DELETE" }); showToast("Despesa excluída"); await loadAll(); }
+  catch (error) { showToast(error.message); }
 }
 
 function renderMetrics(summary) {
@@ -196,6 +251,7 @@ $$('[data-admin-tab]').forEach(button => button.addEventListener("click", () => 
   $("#dashboardView").classList.toggle("hidden", button.dataset.adminTab !== "dashboard");
   $("#productsView").classList.toggle("hidden", button.dataset.adminTab !== "products");
   $("#categoriesView").classList.toggle("hidden", button.dataset.adminTab !== "categories");
+  $("#financeView").classList.toggle("hidden", button.dataset.adminTab !== "finance");
   $("#newProduct").classList.toggle("hidden", button.dataset.adminTab !== "products");
 }));
 function goToProducts() { document.querySelector('[data-admin-tab="products"]').click(); }
@@ -212,6 +268,14 @@ $("#subcategoryForm").addEventListener("submit", saveSubcategory);
 $("#newCategory").addEventListener("click", () => openCategoryForm());
 $("#newSubcategory").addEventListener("click", () => openSubcategoryForm());
 $("#subcategoryFilter").addEventListener("change", renderTaxonomy);
+$("#reportPeriod").addEventListener("change", loadAll);
+$("#newExpense").addEventListener("click", openExpenseForm);
+$("#expenseShortcut").addEventListener("click", openExpenseForm);
+$("#expenseForm").addEventListener("submit", saveExpense);
+$("#expenseList").addEventListener("click", event => {
+  const button = event.target.closest("[data-delete-expense]");
+  if (button) deleteExpense(Number(button.dataset.deleteExpense));
+});
 $("#adminTable").addEventListener("click", event => {
   const edit = event.target.closest("[data-edit-product]"); const remove = event.target.closest("[data-delete-product]");
   if (edit) openProductForm(productById(edit.dataset.editProduct));

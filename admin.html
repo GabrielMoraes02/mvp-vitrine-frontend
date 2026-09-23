@@ -20,7 +20,7 @@
 
     <main class="admin admin-standalone">
       <div class="admin-topbar">
-        <div><span class="eyebrow">GESTÃO DA LOJA</span><h1>Painel administrativo</h1><p>Gerencie produtos, categorias e subcategorias em um só lugar.</p></div>
+        <div><span class="eyebrow">GESTÃO DA LOJA</span><h1>Painel administrativo</h1><p>Gerencie catálogo, vendas e finanças em um só lugar.</p></div>
         <div class="admin-actions">
           <button class="secondary-admin-button" id="syncProducts" type="button">↻ Sincronizar produtos</button>
           <button class="primary-admin-button hidden" id="newProduct" type="button">＋ Novo produto</button>
@@ -31,6 +31,7 @@
         <button class="active" type="button" data-admin-tab="dashboard">Visão geral</button>
         <button type="button" data-admin-tab="products">Produtos</button>
         <button type="button" data-admin-tab="categories">Categorias e subcategorias</button>
+        <button type="button" data-admin-tab="finance">Vendas e financeiro</button>
       </nav>
 
       <section id="dashboardView">
@@ -102,6 +103,48 @@
           </article>
         </div>
       </section>
+
+      <section class="hidden" id="financeView">
+        <div class="finance-toolbar">
+          <div><span class="eyebrow">DESEMPENHO</span><h2>Relatório de vendas</h2><p>Acompanhe receitas, despesas e resultados da loja.</p></div>
+          <div class="finance-toolbar-actions">
+            <label>Período<select id="reportPeriod"><option value="7">Últimos 7 dias</option><option value="30" selected>Últimos 30 dias</option><option value="90">Últimos 90 dias</option><option value="365">Último ano</option></select></label>
+            <button class="primary-admin-button" id="newExpense" type="button">＋ Nova despesa</button>
+          </div>
+        </div>
+
+        <div class="finance-metrics">
+          <article class="revenue"><span>Faturamento</span><strong id="financeRevenue">R$ 0,00</strong><small id="financeOrders">0 pedidos</small></article>
+          <article class="expense"><span>Despesas</span><strong id="financeExpenses">R$ 0,00</strong><small>custos registrados</small></article>
+          <article class="balance"><span>Saldo líquido</span><strong id="financeBalance">R$ 0,00</strong><small>receitas menos despesas</small></article>
+          <article><span>Ticket médio</span><strong id="financeTicket">R$ 0,00</strong><small id="financeItems">0 itens vendidos</small></article>
+        </div>
+
+        <div class="finance-grid">
+          <article class="admin-card finance-card sales-chart-card">
+            <div class="dashboard-card-title"><div><span class="eyebrow">EVOLUÇÃO</span><h2>Vendas por dia</h2></div><span class="dashboard-chip" id="salesPeriodLabel">30 dias</span></div>
+            <div class="sales-chart" id="salesChart"></div>
+          </article>
+          <article class="admin-card finance-card">
+            <div class="dashboard-card-title"><div><span class="eyebrow">PAGAMENTOS</span><h2>Formas de pagamento</h2></div></div>
+            <div class="payment-breakdown" id="paymentBreakdown"></div>
+          </article>
+          <article class="admin-card finance-card">
+            <div class="dashboard-card-title"><div><span class="eyebrow">DESTAQUES</span><h2>Produtos mais vendidos</h2></div></div>
+            <div class="top-products" id="topProducts"></div>
+          </article>
+          <article class="admin-card finance-card expense-card">
+            <div class="dashboard-card-title"><div><span class="eyebrow">SAÍDAS</span><h2>Despesas registradas</h2></div><button class="text-action" id="expenseShortcut" type="button">Adicionar</button></div>
+            <div class="expense-list" id="expenseList"></div>
+          </article>
+        </div>
+
+        <article class="admin-card orders-card">
+          <div class="admin-card-header"><div><h2>Pedidos recentes</h2><p>Últimas vendas confirmadas no checkout</p></div></div>
+          <div class="table-wrap"><table class="product-table"><thead><tr><th>Pedido</th><th>Cliente</th><th>Data</th><th>Pagamento</th><th>Status</th><th>Total</th></tr></thead><tbody id="recentOrdersTable"></tbody></table></div>
+          <div class="admin-empty hidden" id="ordersEmpty"><p>Nenhuma venda registrada neste período.</p></div>
+        </article>
+      </section>
     </main>
 
     <dialog id="productFormDialog" class="form-dialog">
@@ -141,6 +184,18 @@
         <label class="standalone-field">Nome da subcategoria<input id="subcategoryName" required minlength="2" maxlength="80" placeholder="Ex.: Smartphones" /></label>
         <div class="form-error hidden" id="subcategoryError"></div>
         <div class="dialog-actions"><button class="secondary-button" data-close="subcategoryDialog" type="button">Cancelar</button><button class="primary-button" type="submit">Salvar subcategoria</button></div>
+      </form>
+    </dialog>
+
+    <dialog id="expenseDialog" class="small-form-dialog">
+      <form id="expenseForm">
+        <div class="form-dialog-header"><div><span class="eyebrow">CONTROLE FINANCEIRO</span><h2>Registrar despesa</h2></div><button class="dialog-close" data-close="expenseDialog" type="button" aria-label="Fechar">×</button></div>
+        <label class="standalone-field">Descrição<input id="expenseDescription" required minlength="2" maxlength="160" placeholder="Ex.: Embalagens do mês" /></label>
+        <label class="standalone-field">Categoria<select id="expenseCategory" required><option value="Operacional">Operacional</option><option value="Marketing">Marketing</option><option value="Logística">Logística</option><option value="Tecnologia">Tecnologia</option><option value="Impostos">Impostos</option><option value="Outros">Outros</option></select></label>
+        <label class="standalone-field">Valor (R$)<input id="expenseAmount" type="number" min="0.01" step="0.01" required /></label>
+        <label class="standalone-field">Data<input id="expenseDate" type="date" required /></label>
+        <div class="form-error hidden" id="expenseError"></div>
+        <div class="dialog-actions"><button class="secondary-button" data-close="expenseDialog" type="button">Cancelar</button><button class="primary-button" type="submit">Salvar despesa</button></div>
       </form>
     </dialog>
 
