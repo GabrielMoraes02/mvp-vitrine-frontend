@@ -56,7 +56,7 @@
 ## Conferência do vídeo
 
 - [ ] Mostrar objetivo e funcionamento da loja.
-- [ ] Mostrar o fluxograma e os três componentes.
+- [ ] Explicar os três componentes enquanto mostra Docker e Swagger.
 - [ ] Mostrar a sincronização com a Fake Store.
 - [ ] Demonstrar GET, POST, PATCH e DELETE no Swagger.
 - [ ] Mostrar uma compra completa.

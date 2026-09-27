@@ -5,12 +5,11 @@
 
 ## Prepare antes de gravar
 
-Deixe quatro abas abertas:
+Deixe três abas abertas:
 
-1. README com o fluxograma.
-2. Loja: `http://localhost:3000`.
-3. Painel: `http://localhost:3000/admin.html`.
-4. Swagger: `http://localhost:8000/docs`.
+1. Loja: `http://localhost:3000`.
+2. Painel: `http://localhost:3000/admin.html`.
+3. Swagger: `http://localhost:8000/docs`.
 
 Não precisa mostrar testes automatizados nem código-fonte. Mostre o terminal apenas por alguns segundos para comprovar que os dois contêineres estão ativos.
 
@@ -24,15 +23,13 @@ Antes de começar, entre na conta da loja e deixe o carrinho vazio. Assim o chec
 
 > Esse é o Vitrine, uma loja online com uma área de gestão. O cliente pode pesquisar produtos, usar categorias, controlar o orçamento, montar o carrinho e finalizar o pedido. No painel, o administrador controla produtos, estoque, vendas e despesas.
 
-## 2. Mostrar a arquitetura - 35 segundos
+## 2. Explicar a arquitetura - 25 segundos
 
-**Mostrar:** fluxograma no README.
+**Mostrar:** terminal com os dois contêineres ativos e depois o Swagger.
 
 **Falar:**
 
 > O sistema tem três partes. A interface da loja, uma API própria que salva os dados em SQLite e a Fake Store, usada para buscar o catálogo inicial. A comunicação é feita por REST. O frontend e a API ficam em repositórios separados e rodam pelo Docker.
-
-**Mostrar rapidamente:** terminal com os contêineres ativos.
 
 ## 3. Mostrar a integração externa - 25 segundos
 
@@ -125,7 +122,7 @@ Mostre rapidamente:
 Se esquecer o texto, siga apenas esta sequência:
 
 1. Loja.
-2. Fluxograma e Docker.
+2. Docker e arquitetura.
 3. Sincronizar produtos.
 4. GET, POST, PATCH e DELETE no Swagger.
 5. Fazer uma compra.
