@@ -1,6 +1,6 @@
 # Vitrine - loja e painel de gestão
 
-A Vitrine é um MVP acadêmico composto por uma loja responsiva e um painel administrativo. Clientes podem pesquisar produtos, usar filtros, favoritar itens, entrar em sua conta, montar um carrinho e concluir uma compra simulada. Administradores gerenciam o catálogo, acompanham vendas e controlam receitas e despesas persistidas pela API própria.
+A Vitrine é uma plataforma acadêmica de compras planejadas e gestão comercial. Clientes podem pesquisar produtos, usar filtros, favoritar itens, acompanhar uma meta de orçamento, entrar em sua conta e concluir uma compra simulada. Administradores gerenciam catálogo e estoque e acompanham vendas, despesas e resultado financeiro persistidos pela API própria.
 
 ![Arquitetura da aplicação](docs/arquitetura.svg)
 
@@ -26,6 +26,16 @@ A Vitrine é um MVP acadêmico composto por uma loja responsiva e um painel admi
 - Cadastro, edição e exclusão de produtos pela API própria.
 - Sincronização de produtos da Fake Store.
 - Mensagens de carregamento, sucesso e erro.
+
+## Diferenciais do projeto
+
+O projeto vai além da exibição de um catálogo externo. A sincronização importa e normaliza os dados para a base local, enquanto a jornada de compra registra pedidos no domínio da aplicação e reduz o estoque de forma transacional. O painel transforma esses registros em indicadores comerciais e financeiros por período.
+
+- Planejamento de compra com meta de orçamento e acompanhamento visual.
+- Checkout integrado ao estoque persistido, com validação dos valores no servidor.
+- Gestão hierárquica de categorias e subcategorias.
+- Visão administrativa de estoque baixo, vendas, despesas e saldo líquido.
+- Relatórios de ticket médio, formas de pagamento e produtos mais vendidos.
 
 ## Execução com Docker
 
@@ -112,6 +122,7 @@ A aplicação utiliza a [Fake Store API](https://fakestoreapi.com/) por meio da 
 
 - [Roteiro do vídeo](docs/roteiro-video.md)
 - [Checklist final](docs/checklist-entrega.md)
+- [Mensagem de entrega](docs/mensagem-entrega.md)
 
 ## Observação acadêmica
 
