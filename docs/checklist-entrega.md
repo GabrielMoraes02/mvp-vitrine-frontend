@@ -39,8 +39,8 @@
 
 ## Repositórios
 
-- [x] Frontend público: `https://github.com/GabrielMoraes02/vitrine-frontend`
-- [x] API pública: `https://github.com/GabrielMoraes02/vitrine-api`
+- [x] Frontend público: `https://github.com/GabrielMoraes02/mvp-vitrine-frontend`
+- [x] API pública: `https://github.com/GabrielMoraes02/mvp-vitrine-api`
 - [x] Branch principal `main` enviada nos dois repositórios.
 - [x] Código local commitado e sincronizado.
 

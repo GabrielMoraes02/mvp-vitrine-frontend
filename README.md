@@ -12,8 +12,8 @@ A Vitrine é uma plataforma de compras planejadas e gestão comercial. Clientes 
 
 ## Repositórios
 
-- Interface: [github.com/GabrielMoraes02/vitrine-frontend](https://github.com/GabrielMoraes02/vitrine-frontend)
-- API: [github.com/GabrielMoraes02/vitrine-api](https://github.com/GabrielMoraes02/vitrine-api)
+- Interface: [github.com/GabrielMoraes02/mvp-vitrine-frontend](https://github.com/GabrielMoraes02/mvp-vitrine-frontend)
+- API: [github.com/GabrielMoraes02/mvp-vitrine-api](https://github.com/GabrielMoraes02/mvp-vitrine-api)
 
 ## Funcionalidades
 
