@@ -123,6 +123,7 @@ A aplicação utiliza a [Fake Store API](https://fakestoreapi.com/) por meio da 
 - [Roteiro do vídeo](docs/roteiro-video.md)
 - [Checklist final](docs/checklist-entrega.md)
 - [Mensagem de entrega](docs/mensagem-entrega.md)
+- [Relatório de validação](docs/relatorio-validacao.md)
 
 ## Observação acadêmica
 

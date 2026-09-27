@@ -19,17 +19,17 @@
 
 ## Antes de gravar
 
-- [ ] Instalar ou iniciar o Docker Desktop.
-- [ ] Clonar os dois repositórios lado a lado.
-- [ ] Executar `docker compose up --build` na raiz do front-end.
-- [ ] Confirmar interface em `http://localhost:3000`.
-- [ ] Confirmar painel em `http://localhost:3000/admin.html`.
-- [ ] Confirmar Swagger em `http://localhost:8000/docs`.
-- [ ] Sincronizar a Fake Store e confirmar os produtos.
-- [ ] Testar cadastro, edição e exclusão pelo painel.
-- [ ] Concluir uma compra e conferir pedido, estoque e relatório.
-- [ ] Cadastrar e excluir uma despesa.
-- [ ] Reiniciar os contêineres e confirmar a persistência.
+- [x] Instalar ou iniciar o Docker Desktop.
+- [x] Manter os dois repositórios lado a lado.
+- [x] Executar `docker compose up --build` na raiz do front-end.
+- [x] Confirmar interface em `http://localhost:3000`.
+- [x] Confirmar painel em `http://localhost:3000/admin.html`.
+- [x] Confirmar Swagger em `http://localhost:8000/docs`.
+- [x] Sincronizar a Fake Store e confirmar os produtos.
+- [x] Testar cadastro, edição e exclusão.
+- [x] Concluir uma compra e conferir pedido, estoque e relatório.
+- [x] Cadastrar uma despesa e conferir o cálculo financeiro.
+- [x] Reiniciar os contêineres e confirmar a persistência.
 - [ ] Deixar um produto temporário preparado para demonstrar o DELETE.
 
 ## GitHub
