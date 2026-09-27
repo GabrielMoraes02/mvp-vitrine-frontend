@@ -30,15 +30,15 @@
 - [x] Concluir uma compra e conferir pedido, estoque e relatório.
 - [x] Cadastrar uma despesa e conferir o cálculo financeiro.
 - [x] Reiniciar os contêineres e confirmar a persistência.
-- [ ] Deixar um produto temporário preparado para demonstrar o DELETE.
+- [x] Deixar os JSONs de POST e PATCH preparados no roteiro.
 
 ## GitHub
 
-- [ ] Autenticar novamente a conta no GitHub CLI.
-- [ ] Criar o repositório público `vitrine-frontend`.
-- [ ] Criar o repositório público `vitrine-api`.
-- [ ] Enviar a branch `main` dos dois projetos.
-- [ ] Abrir os links em uma janela anônima e confirmar que são públicos.
+- [x] Autenticar novamente a conta no GitHub CLI.
+- [x] Criar o repositório público `vitrine-frontend`.
+- [x] Criar o repositório público `vitrine-api`.
+- [x] Enviar a branch `main` dos dois projetos.
+- [x] Confirmar que os dois repositórios estão públicos.
 
 ## Vídeo
 
