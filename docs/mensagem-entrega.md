@@ -2,7 +2,7 @@
 
 Substitua os campos entre colchetes pelos links definitivos e envie sem transformar as URLs em textos clicáveis.
 
-Olá, seguem os dados referentes à entrega do meu MVP Vitrine.
+Olá, seguem os dados referentes à entrega do Vitrine.
 
 Link para o vídeo de apresentação: [URL COMPLETA DO VÍDEO]
 

@@ -1,6 +1,6 @@
 # Vitrine - loja e painel de gestão
 
-A Vitrine é uma plataforma acadêmica de compras planejadas e gestão comercial. Clientes podem pesquisar produtos, usar filtros, favoritar itens, acompanhar uma meta de orçamento, entrar em sua conta e concluir uma compra simulada. Administradores gerenciam catálogo e estoque e acompanham vendas, despesas e resultado financeiro persistidos pela API própria.
+A Vitrine é uma plataforma de compras planejadas e gestão comercial. Clientes podem pesquisar produtos, usar filtros, favoritar itens, acompanhar uma meta de orçamento, entrar em sua conta e concluir pedidos. Administradores gerenciam catálogo e estoque e acompanham vendas, despesas e resultado financeiro persistidos pela API própria.
 
 ![Arquitetura da aplicação](docs/arquitetura.svg)
 
@@ -9,6 +9,11 @@ A Vitrine é uma plataforma acadêmica de compras planejadas e gestão comercial
 1. **Interface Vitrine:** HTML, CSS e JavaScript, servidos pelo Nginx.
 2. **API Vitrine:** FastAPI e SQLite, mantida em repositório separado.
 3. **Fake Store API:** serviço público externo usado para obter o catálogo inicial.
+
+## Repositórios
+
+- Interface: [github.com/GabrielMoraes02/vitrine-frontend](https://github.com/GabrielMoraes02/vitrine-frontend)
+- API: [github.com/GabrielMoraes02/vitrine-api](https://github.com/GabrielMoraes02/vitrine-api)
 
 ## Funcionalidades
 
@@ -125,6 +130,6 @@ A aplicação utiliza a [Fake Store API](https://fakestoreapi.com/) por meio da 
 - [Mensagem de entrega](docs/mensagem-entrega.md)
 - [Relatório de validação](docs/relatorio-validacao.md)
 
-## Observação acadêmica
+## Pagamentos
 
-As compras são simuladas e não envolvem pagamentos reais. A função principal do projeto é demonstrar componentização, comunicação REST, persistência e gestão de catálogo.
+A aplicação registra pedidos e formas de pagamento para fins de demonstração, mas não processa cobranças reais nem armazena dados de cartão.

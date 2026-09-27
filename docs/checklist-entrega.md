@@ -1,61 +1,64 @@
-# Checklist final de entrega
+# Checklist final
 
-## Código e requisitos já concluídos
+**Situação atual:** aplicação pronta para gravação e entrega.
 
-- [x] Interface responsiva em HTML, CSS e JavaScript.
-- [x] API REST em Python com FastAPI e Swagger.
-- [x] Comunicação pelos métodos GET, POST, PATCH e DELETE.
-- [x] Persistência em SQLite.
-- [x] Integração externa com a Fake Store API sem redirecionamento.
-- [x] CRUD de produtos, categorias e subcategorias.
-- [x] Carrinho, login demonstrativo e checkout.
-- [x] Registro de pedidos e baixa automática de estoque.
+## Aplicação
+
+- [x] Loja responsiva em HTML, CSS e JavaScript.
+- [x] Login do cliente, carrinho e checkout.
+- [x] Pesquisa, filtros, categorias, favoritos e orçamento.
+- [x] Painel administrativo sem acesso pela página inicial.
+- [x] Gestão de produtos, categorias e subcategorias.
+- [x] Registro de pedidos e baixa de estoque.
 - [x] Relatório de vendas e controle financeiro.
-- [x] Dockerfile na raiz dos dois repositórios.
-- [x] `docker-compose.yml` na raiz do front-end.
-- [x] READMEs com instalação, execução e API externa.
-- [x] Fluxograma da arquitetura no README principal.
-- [x] Testes automatizados aprovados.
+- [x] Textos da interface revisados, sem referências acadêmicas ou técnicas.
 
-## Antes de gravar
+## Arquitetura e API
 
-- [x] Instalar ou iniciar o Docker Desktop.
-- [x] Manter os dois repositórios lado a lado.
-- [x] Executar `docker compose up --build` na raiz do front-end.
-- [x] Confirmar interface em `http://localhost:3000`.
-- [x] Confirmar painel em `http://localhost:3000/admin.html`.
-- [x] Confirmar Swagger em `http://localhost:8000/docs`.
-- [x] Sincronizar a Fake Store e confirmar os produtos.
-- [x] Testar cadastro, edição e exclusão.
-- [x] Concluir uma compra e conferir pedido, estoque e relatório.
-- [x] Cadastrar uma despesa e conferir o cálculo financeiro.
-- [x] Reiniciar os contêineres e confirmar a persistência.
-- [x] Deixar os JSONs de POST e PATCH preparados no roteiro.
+- [x] Frontend, API própria e API externa.
+- [x] Comunicação REST.
+- [x] Métodos GET, POST, PATCH e DELETE.
+- [x] FastAPI com documentação Swagger.
+- [x] Persistência em SQLite.
+- [x] Integração com a Fake Store sem redirecionamento.
+- [x] Fluxograma da arquitetura no README.
+- [x] READMEs com instalação e execução.
 
-## GitHub
+## Testes e Docker
 
-- [x] Autenticar novamente a conta no GitHub CLI.
-- [x] Criar o repositório público `vitrine-frontend`.
-- [x] Criar o repositório público `vitrine-api`.
-- [x] Enviar a branch `main` dos dois projetos.
-- [x] Confirmar que os dois repositórios estão públicos.
+- [x] 6 testes automatizados aprovados.
+- [x] Docker Desktop instalado e funcionando.
+- [x] Dockerfile no frontend e na API.
+- [x] Docker Compose na raiz do frontend.
+- [x] Loja funcionando em `http://localhost:3000`.
+- [x] Painel funcionando em `http://localhost:3000/admin.html`.
+- [x] Swagger funcionando em `http://localhost:8000/docs`.
+- [x] 20 produtos sincronizados.
+- [x] Persistência confirmada após reiniciar os contêineres.
+- [x] Venda e despesa preparadas para mostrar o relatório preenchido.
 
-## Vídeo
+## Repositórios
 
-- [ ] Seguir `docs/roteiro-video.md`.
-- [ ] Duração máxima de 6 minutos.
-- [ ] Apresentar problema, objetivo e diferencial.
-- [ ] Mostrar arquitetura e comunicação REST.
-- [ ] Apresentar a API externa.
-- [ ] Executar a solução via Docker.
+- [x] Frontend público: `https://github.com/GabrielMoraes02/vitrine-frontend`
+- [x] API pública: `https://github.com/GabrielMoraes02/vitrine-api`
+- [x] Branch principal `main` enviada nos dois repositórios.
+- [x] Código local commitado e sincronizado.
+
+## O que ainda falta
+
+- [ ] Gravar seguindo `docs/roteiro-video.md`.
+- [ ] Confirmar que o vídeo tem menos de 6 minutos.
+- [ ] Publicar o vídeo com acesso público ou por link.
+- [ ] Colocar a URL do vídeo em `docs/mensagem-entrega.md`.
+- [ ] Abrir os três links e fazer uma última conferência.
+- [ ] Enviar a mensagem antes do prazo.
+
+## Conferência do vídeo
+
+- [ ] Mostrar objetivo e funcionamento da loja.
+- [ ] Mostrar o fluxograma e os três componentes.
+- [ ] Mostrar a sincronização com a Fake Store.
 - [ ] Demonstrar GET, POST, PATCH e DELETE no Swagger.
-- [ ] Mostrar a jornada do cliente e o painel administrativo.
-- [ ] Mostrar relatório de vendas e controle financeiro.
-- [ ] Publicar o vídeo com acesso por link ou público.
-
-## Entrega
-
-- [ ] Preencher `docs/mensagem-entrega.md` com as três URLs definitivas.
-- [ ] Usar URLs completas iniciadas por `https://`.
-- [ ] Abrir os links antes de enviar.
-- [ ] Enviar a mensagem dentro do prazo da disciplina.
+- [ ] Mostrar uma compra completa.
+- [ ] Mostrar estoque, vendas e controle financeiro no painel.
+- [ ] Evitar notificações, senhas e tokens na gravação.

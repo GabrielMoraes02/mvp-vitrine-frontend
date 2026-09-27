@@ -1,81 +1,101 @@
 # Roteiro de apresentação - Vitrine
 
-**Tempo-alvo:** 5 minutos e 30 segundos
-**Limite da avaliação:** 6 minutos
+**Duração:** aproximadamente 5 minutos
+**Limite:** 6 minutos
 
-Antes de gravar, deixe abertas estas telas, nesta ordem:
+Deixe abertas antes de gravar:
 
-1. README do front-end, com o fluxograma visível.
-2. Loja em `http://localhost:3000`.
-3. Painel em `http://localhost:3000/admin.html`.
-4. Swagger em `http://localhost:8000/docs`.
+1. O fluxograma no README.
+2. A loja em `http://localhost:3000`.
+3. O painel em `http://localhost:3000/admin.html`.
+4. O Swagger em `http://localhost:8000/docs`.
 
-Deixe também um produto temporário cadastrado para demonstrar edição e exclusão.
+## 0:00 - Abertura
 
-## 0:00-0:40 - Problema, objetivo e diferencial
+**Mostrar a página inicial.**
 
-**Mostrar:** página inicial da loja e o carrossel.
+> Esse é o Vitrine, uma loja online com uma área completa de gestão. Na loja, o cliente pesquisa produtos, filtra categorias, controla o orçamento e finaliza o pedido. No painel, é possível cuidar do catálogo, do estoque, das vendas e das despesas. A ideia foi reunir a experiência de compra e a gestão do negócio no mesmo sistema.
 
-**Falar:**
+## 0:30 - Como o sistema funciona
 
-> Olá, este é o Vitrine, meu MVP de arquitetura de software. Ele resolve dois problemas de uma loja virtual: facilita a compra planejada para o cliente e centraliza a gestão comercial para o administrador. O cliente pesquisa, filtra, favorita, acompanha seu orçamento e finaliza uma compra simulada. No painel administrativo é possível controlar catálogo, categorias, estoque, vendas, despesas e resultado financeiro. O diferencial em relação a um catálogo simples é integrar a jornada completa de compra com gestão financeira e baixa automática de estoque.
+**Mostrar o fluxograma do README.**
 
-## 0:40-1:20 - Arquitetura e comunicação
+> O sistema tem três partes. A primeira é a interface da loja e do painel. A segunda é a API própria, que concentra as regras e salva os dados em SQLite. A terceira é a Fake Store API, usada para buscar o catálogo inicial. A comunicação é feita por REST. O frontend e o backend ficam em repositórios separados e rodam em contêineres Docker.
 
-**Mostrar:** fluxograma no README.
+## 1:05 - Integração externa
 
-**Falar:**
+**Abrir o painel e clicar em “Sincronizar produtos”.**
 
-> A solução possui três componentes que se comunicam por REST. O primeiro é a interface responsiva, criada com HTML, CSS e JavaScript e servida pelo Nginx. O segundo é uma API própria desenvolvida em Python com FastAPI, responsável pelas regras de negócio e pela persistência em SQLite. O terceiro é a Fake Store API, um serviço público externo usado para obter o catálogo inicial. A interface nunca redireciona o usuário para a API externa: o backend consulta, normaliza e armazena os dados. Frontend e backend possuem repositórios e Dockerfiles separados, e o Docker Compose inicializa os dois serviços e o volume persistente.
+> Aqui eu sincronizo o catálogo. O painel chama a minha API, e ela consulta a rota de produtos da Fake Store. Os dados são tratados, traduzidos e salvos no banco local. O usuário continua dentro da aplicação durante todo o processo.
 
-## 1:20-1:50 - API externa
+## 1:35 - API e Swagger
 
-**Mostrar:** painel administrativo e botão **Sincronizar produtos**.
+**Abrir o Swagger.**
 
-**Falar:**
+> A API foi feita em FastAPI e todas as rotas estão documentadas no Swagger. Elas estão separadas por produtos, categorias, vendas, relatórios e financeiro.
 
-> A integração externa utiliza a rota pública GET products da Fake Store API. Ela é gratuita, não exige cadastro e seu projeto de referência usa licença MIT. Ao selecionar Sincronizar produtos, o frontend faz um POST para a API própria. O backend consulta a Fake Store, traduz categorias e descrições, evita duplicidade pelo identificador externo e persiste o resultado no SQLite.
+Demonstrar nesta ordem:
 
-**Ação:** clicar em **Sincronizar produtos** e mostrar a confirmação.
+1. `GET /api/products` - listar produtos.
+2. `POST /api/products` - cadastrar um produto.
+3. `PATCH /api/products/{id}` - alterar preço e estoque.
+4. `DELETE /api/products/{id}` - excluir o produto.
+5. `GET /api/dashboard` - consultar os indicadores.
+6. `GET /api/reports/sales` - consultar o relatório financeiro.
 
-## 1:50-3:15 - API própria e Swagger
+Enquanto demonstra:
 
-**Mostrar:** `http://localhost:8000/docs`.
+> Aqui estão os quatro métodos principais: GET, POST, PATCH e DELETE. Além do cadastro de produtos, a API permite pesquisar, filtrar e ordenar, gerenciar categorias, registrar pedidos, baixar o estoque e calcular os indicadores financeiros. Os dados continuam salvos mesmo depois de reiniciar os contêineres.
 
-**Falar:**
+## 2:55 - Jornada do cliente
 
-> A documentação da API é gerada automaticamente pelo Swagger. As rotas estão agrupadas por produtos, categorias, subcategorias, vendas, relatórios, financeiro e integrações. Aqui estão presentes os quatro métodos obrigatórios.
+**Voltar para a loja.**
 
-Execute rapidamente estas chamadas:
+1. Pesquisar um produto.
+2. Escolher uma categoria e ordenar por preço.
+3. Abrir os detalhes e favoritar.
+4. Adicionar ao carrinho.
+5. Mostrar a meta de orçamento.
+6. Entrar na conta e abrir o checkout.
+7. Confirmar o pedido.
 
-1. **GET `/api/products`** - listar o catálogo.
-2. **POST `/api/products`** - criar o produto de demonstração.
-3. **PATCH `/api/products/{id}`** - alterar preço ou estoque.
-4. **DELETE `/api/products/{id}`** - excluir o produto.
-5. **GET `/api/dashboard`** - exibir indicadores administrativos.
-6. **GET `/api/reports/sales`** - exibir o relatório financeiro.
+> A loja carrega o catálogo pela API e mostra o resultado das ações na hora. O carrinho fica salvo no navegador e pode ser comparado com a meta de orçamento. Na finalização, a API confere os preços e o estoque, registra o pedido, reduz a quantidade disponível e devolve o número da compra.
 
-Enquanto executa, fale:
+## 4:05 - Painel administrativo
 
-> O GET lista e filtra produtos. O POST cadastra e valida um novo item. O PATCH permite atualização parcial, e o DELETE remove o registro. Além do CRUD, a API possui filtros, ordenação, categorias e subcategorias, sincronização externa, registro de pedidos com baixa de estoque, despesas e consolidação financeira por período. Respostas inválidas recebem códigos HTTP adequados, e os dados continuam armazenados após reiniciar os contêineres.
+**Abrir o painel.**
 
-### JSON rápido para o POST
+1. Mostrar os indicadores gerais e o estoque baixo.
+2. Mostrar categorias e subcategorias.
+3. Abrir o gerenciamento de produtos.
+4. Abrir “Vendas e financeiro”.
+5. Trocar o período do relatório.
+
+> No painel eu consigo cadastrar e editar produtos, organizar categorias e acompanhar o estoque. Na parte financeira aparecem faturamento, despesas, saldo, ticket médio, vendas por dia, formas de pagamento, produtos mais vendidos e pedidos recentes. Também posso registrar e excluir despesas.
+
+## 4:55 - Encerramento
+
+> O Vitrine reúne uma interface responsiva, uma API própria, persistência em banco de dados, integração externa, documentação Swagger e execução em Docker. Além do catálogo, ele cobre a compra, o estoque e o controle financeiro.
+
+## JSON para a demonstração
+
+Use no `POST /api/products`:
 
 ```json
 {
   "title": "Produto demonstração",
+  "description": "Produto criado durante a apresentação.",
   "price": 49.9,
-  "description": "Produto criado durante a apresentação do MVP.",
-  "category": "eletronicos",
+  "category": "Eletrônicos",
   "image": "https://placehold.co/600x600",
-  "rating": 4.8,
-  "rating_count": 10,
   "stock": 8,
-  "active": true
+  "active": true,
+  "rating": 4.8,
+  "rating_count": 10
 }
 ```
 
-### JSON rápido para o PATCH
+Use no `PATCH /api/products/{id}`:
 
 ```json
 {
@@ -84,48 +104,11 @@ Enquanto executa, fale:
 }
 ```
 
-## 3:15-4:35 - Jornada do cliente
+## Antes de enviar
 
-**Mostrar:** loja.
-
-**Ações e fala:**
-
-1. Pesquisar por um produto e filtrar uma categoria.
-2. Ordenar por preço, abrir os detalhes e favoritar.
-3. Adicionar ao carrinho e mostrar a meta de orçamento.
-4. Entrar na conta e abrir a finalização da compra.
-5. Mostrar endereço, pagamento e resumo; concluir a compra.
-
-> A interface consome a API própria para carregar e pesquisar o catálogo. O cliente recebe feedback visual em todas as ações. O carrinho é persistido no navegador e mostra o impacto na meta de orçamento. No checkout, a compra envia um POST para a API. O backend recalcula o valor usando os preços salvos, valida o estoque, registra o pedido, reduz as unidades e devolve um número de confirmação.
-
-## 4:35-5:20 - Administração e controle financeiro
-
-**Mostrar:** painel administrativo.
-
-**Ações:**
-
-1. Mostrar visão geral, distribuição por categoria e estoque baixo.
-2. Abrir categorias e subcategorias.
-3. Abrir produtos e mostrar cadastro e edição.
-4. Abrir **Vendas e financeiro**.
-5. Trocar o período e mostrar faturamento, despesas, saldo, ticket médio, produtos mais vendidos e pedidos recentes.
-
-**Falar:**
-
-> No painel, o administrador acompanha o catálogo e o estoque, gerencia categorias e subcategorias e usa as operações GET, POST, PATCH e DELETE pela própria interface. A área financeira transforma os pedidos registrados em indicadores: faturamento, despesas, saldo líquido, ticket médio, vendas por dia, formas de pagamento e produtos mais vendidos. Também é possível cadastrar e excluir despesas. Isso demonstra funcionalidades além do CRUD básico e torna o projeto uma solução de gestão, não apenas uma cópia de catálogo.
-
-## 5:20-5:35 - Encerramento
-
-**Falar:**
-
-> Assim, o Vitrine demonstra componentização, comunicação REST, integração externa, persistência, documentação Swagger, execução em Docker e uma jornada completa de compra e gestão. Obrigado.
-
-## Conferência da gravação
-
-- O vídeo deve ficar abaixo de 6 minutos.
-- O terminal precisa mostrar que a execução foi feita com Docker Compose.
-- O fluxograma precisa aparecer de forma legível.
-- Mostre a confirmação da sincronização externa.
+- Confirme que o vídeo ficou abaixo de 6 minutos.
+- Mostre que a aplicação está rodando pelo Docker.
 - Execute GET, POST, PATCH e DELETE no Swagger.
-- Mostre pelo menos uma chamada refletida na interface.
+- Mostre a sincronização externa.
+- Mostre a compra aparecendo no relatório financeiro.
 - Não deixe senhas, tokens ou notificações pessoais visíveis.
