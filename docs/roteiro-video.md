@@ -5,7 +5,7 @@ Siga esta página de cima para baixo. Não precisa improvisar.
 ## Antes de apertar o botão de gravar
 
 1. Confirme que o Docker está aberto.
-2. Deixe o terminal mostrando os dois contêineres ativos.
+2. Deixe o Docker Desktop mostrando os contêineres `frontend` e `api` ativos.
 3. Abra a loja: `http://localhost:3000`.
 4. Abra o painel: `http://localhost:3000/admin.html`.
 5. Abra o Swagger: `http://localhost:8000/docs`.
@@ -24,11 +24,11 @@ Agora comece a gravar.
 
 > Esse é o Vitrine, uma loja online com uma área de gestão. O cliente pode pesquisar produtos, usar categorias, controlar o orçamento, montar o carrinho e finalizar o pedido. O administrador controla produtos, estoque, vendas e despesas.
 
-Quando terminar essa frase, vá para o terminal.
+Quando terminar essa frase, abra o Docker Desktop.
 
 ## Passo 2 - Explicar as três partes
 
-**Mostre:** terminal com os contêineres ativos.
+**Mostre:** Docker Desktop com os contêineres `frontend` e `api` ativos.
 
 **Fale:**
 
@@ -166,7 +166,7 @@ Pare a gravação.
 ## O que precisa aparecer no vídeo
 
 - Loja funcionando.
-- Docker com frontend e API ativos.
+- Docker Desktop com frontend e API ativos.
 - Sincronização da Fake Store.
 - GET com código 200.
 - POST com código 201.
